@@ -1,0 +1,6 @@
+---
+app_name: racoon_royal
+red_port: 8081
+black_port: 8082
+domain_name: localhost
+nginx_conf_path: "/etc/nginx/sites-enabled/{{ app_slug }}"

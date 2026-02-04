@@ -1,0 +1,6 @@
+---
+container_registry: "ghcr.io"
+image_repository: "your-username/racoon-royal"
+image_tag: "latest"  # In CI/CD, you'll pass this as an extra-var
+
+full_image_name: "{{ container_registry }}/{{ image_repository }}:{{ image_tag }}"

@@ -1,0 +1,4 @@
+# ansible/requirements.yml
+collections:
+  - name: community.docker
+    version: 3.10.2 # Or your preferred version

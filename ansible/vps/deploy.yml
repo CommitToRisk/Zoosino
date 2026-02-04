@@ -1,0 +1,6 @@
+---
+- name: Deploy Racoon Royal
+  hosts: web_servers
+  become: yes
+  roles:
+    - symfony_app  # This role contains the Red/Black logic we discussed

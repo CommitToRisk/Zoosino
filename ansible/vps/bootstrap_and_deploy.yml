@@ -1,0 +1,66 @@
+- name: Ensure Vagrant VM is up and ready
+  hosts: localhost
+  gather_facts: false
+  vars:
+    local_key_dir: "{{ lookup('env','HOME') }}/.vagrant_keys"
+    vagrant_dir: "{{ playbook_dir }}/vagrant"  # adjust if your Vagrantfile is elsewhere
+  tasks:
+
+    - name: Start the Vagrant VM
+      command: vagrant up
+      args:
+        chdir: "{{ vagrant_dir }}"
+      register: vagrant_up
+
+    - name: Get SSH config from Vagrant
+      command: vagrant ssh-config
+      args:
+        chdir: "{{ vagrant_dir }}"
+      register: ssh_config
+
+    - name: Parse SSH info from ssh-config
+      set_fact:
+        racoon_vps_ssh:
+          host: "{{ ssh_config.stdout_lines | select('search', 'HostName') | map('regex_replace','HostName\\s+','') | list | first }}"
+          user: "{{ ssh_config.stdout_lines | select('search', 'User ') | map('regex_replace','User\\s+','') | list | first }}"
+          port: "{{ ssh_config.stdout_lines | select('search', 'Port') | map('regex_replace','Port\\s+','') | list | first }}"
+          key_source: "{{ ssh_config.stdout_lines | select('search', 'IdentityFile') | map('regex_replace','IdentityFile\\s+','') | list | first }}"
+
+    - name: Create local key directory
+      file:
+        path: "{{ local_key_dir }}"
+        state: directory
+        mode: '0700'
+
+    - name: Copy Vagrant private key into WSL filesystem
+      copy:
+        src: "{{ racoon_vps_ssh.key_source }}"
+        dest: "{{ local_key_dir }}/racoon_private_key"
+        mode: '0600'
+
+    - name: Set final SSH variables for the VM
+      set_fact:
+        ansible_user: "{{ racoon_vps_ssh.user }}"
+        ansible_host: "{{ racoon_vps_ssh.host }}"
+        ansible_port: "{{ racoon_vps_ssh.port }}"
+        ansible_private_key_file: "{{ local_key_dir }}/racoon_private_key"
+
+- name: Deploy Racoon Royal roles
+  hosts: all
+  gather_facts: true
+  vars:
+    ansible_user: "{{ ansible_user }}"
+    ansible_host: "{{ ansible_host }}"
+    ansible_port: "{{ ansible_port }}"
+    ansible_private_key_file: "{{ ansible_private_key_file }}"
+  tasks:
+    - name: Ping the VM to verify SSH
+      ping: {}
+
+    # Add your actual roles/tasks below
+    # - include_role:
+    #     name: docker
+    # - include_role:
+    #     name: nginx_proxy
+    # - include_role:
+    #     name: symfony_app

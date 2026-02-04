@@ -1,0 +1,54 @@
+---
+- name: Determine which slot is active
+  shell: "grep -q '{{ red_port }}' {{ nginx_conf_path }} && echo 'red' || echo 'black'"
+  register: current_slot
+  failed_when: false
+  changed_when: false
+
+- name: Set target variables
+  set_fact:
+    target_port: "{{ (current_slot.stdout == 'red') | ternary(black_port, red_port) }}"
+    target_color: "{{ (current_slot.stdout == 'red') | ternary('black', 'red') }}"
+    # Store the old color so we can safely shut it down later
+    old_color: "{{ current_slot.stdout | default('') }}"
+
+- name: "Deploy New Container to {{ target_color }} slot"
+  community.docker.docker_container:
+    name: "{{ app_slug }}_{{ target_color }}"
+    image: "{{ full_image_name }}"
+    state: started
+    pull: yes
+    recreate: yes
+    ports:
+      - "{{ target_port }}:80"
+    env:
+      APP_ENV: prod
+
+# --- THE SAFETY CHECK ---
+- name: "Verify new {{ target_color }} container is healthy"
+  uri:
+    url: "http://127.0.0.1:{{ target_port }}"
+    status_code: 200
+  register: health_check
+  until: health_check.status == 200
+  retries: 10
+  delay: 5
+
+- name: "Update Nginx Proxy to point to {{ target_color }}"
+  template:
+    src: templates/nginx_proxy.conf.j2
+    dest: "{{ nginx_conf_path }}"
+  vars:
+    active_port: "{{ target_port }}"
+  notify: Reload Nginx
+
+- name: "Stop the old version (Only if switch was successful)"
+  community.docker.docker_container:
+    name: "{{ app_slug }}_{{ old_color }}"
+    state: stopped
+  # Ensure we only stop if:
+  # 1. There was actually an old version running
+  # 2. We aren't somehow trying to stop the container we just started
+  when: 
+    - old_color != "" 
+    - old_color != target_color

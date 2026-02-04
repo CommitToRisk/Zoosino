@@ -1,0 +1,18 @@
+---
+- name: Install Nginx on host
+  apt:
+    name: nginx
+    state: present
+
+- name: Remove default Nginx config
+  file:
+    path: /etc/nginx/sites-enabled/default
+    state: absent
+
+- name: Create initial Nginx proxy config
+  template:
+    src: nginx_proxy.conf.j2
+    dest: "{{ nginx_conf_path }}"
+  vars:
+    active_port: "{{ red_port }}"
+  notify: Reload Nginx

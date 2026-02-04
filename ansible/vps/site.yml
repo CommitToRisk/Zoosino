@@ -1,0 +1,13 @@
+---
+- name: Manage Racoon Royal
+  hosts: all
+  become: true
+
+  roles:
+    # First, ensure Nginx is installed (Role: nginx_proxy)
+    - role: nginx_proxy
+      tags: [setup]
+
+    # Then, run your swap logic (Role: symfony_app)
+    - role: symfony_app
+      tags: [deploy]
