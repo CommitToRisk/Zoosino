@@ -1,0 +1,39 @@
+name: Deploy to Production
+
+on:
+  push:
+    tags:
+      - 'v*' # Triggers only when you push a version tag
+
+jobs:
+  deploy:
+    runs-on: self-hosted
+    steps:
+      - name: Checkout Code
+        uses: actions/checkout@v4
+
+      - name: Setup PHP
+        uses: shivammathur/setup-php@v2
+        with:
+          php-version: '8.2'
+          extensions: pdo_mysql
+
+      - name: Install Ansible
+        run: pip install ansible
+
+      - name: Configure SSH
+        run: |
+          mkdir -p ~/.ssh
+          echo "${{ secrets.DEPLOY_SSH_KEY }}" > ~/.ssh/id_rsa
+          chmod 600 ~/.ssh/id_rsa
+          ssh-keyscan -H ${{ secrets.SERVER_IP }} >> ~/.ssh/known_hosts
+
+      - name: Execute Ansible Playbook
+        env:
+          ANSIBLE_HOST_KEY_CHECKING: "False"
+        run: |
+          ansible-playbook -i ${{ secrets.SERVER_IP }}, \
+          deployment/playbook.yml \
+          --user ${{ secrets.REMOTE_USER }} \
+          --private-key ~/.ssh/id_rsa \
+          --extra-vars "release_version=${{ github.ref_name }}"
