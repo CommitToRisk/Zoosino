@@ -12,7 +12,7 @@ jobs:
         uses: actions/checkout@v4
 
       - name: Build New Image
-        run: docker build -t symfony-app:latest .
+        run: docker build -t symfony-app:latest ./backend
 
       - name: Preparation & Cleanup
         run: |
