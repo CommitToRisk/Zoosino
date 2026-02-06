@@ -15,7 +15,7 @@ WORKDIR /var/www
 COPY . .
 
 # Speed up the container
-RUN composer install --no-dev --optimize-autoloader
+RUN composer install --no-dev --optimize-autoloader --no-scripts
 
 # Give permissions to Symfony's cache/logs
 RUN chown -R www-data:www-data var/
