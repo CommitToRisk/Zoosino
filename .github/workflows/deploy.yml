@@ -29,7 +29,9 @@ jobs:
       - name: Start Staging Container
         run: |
           docker run -d \
+            --network app-network \
             --name symfony-new \
+            -v /srv/symfony-prod/.env.prod:/app/.env.prod:ro \
             -p 8081:80 \
             -e APP_ENV=prod \
             symfony-app:latest
