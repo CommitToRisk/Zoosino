@@ -2,6 +2,7 @@ import { useState } from "react";
 import { Link } from "react-router-dom";
 import { NavigationLink } from "./NavigationLink";
 import { MenuButton } from "./MenuButton";
+import { BalanceDisplay } from "../BalanceDisplay";
 
 export function Navigation() {
   const [isOpen, setIsOpen] = useState(false);
@@ -10,26 +11,29 @@ export function Navigation() {
     <nav className="bg-secondary shadow-sm">
       <div className="container mx-auto px-4">
         <div className="flex items-center justify-between h-16">
-          <div className="shrink-0">
+          <div className="flex-1 flex justify-start">
             <Link
               to="/"
-              className="text-primary font-bold text-xl tracking-wider hover:text-primary-hover transition-colors"
+              className="text-primary font-bold text-xl tracking-wider hover:text-primary-hover transition-colors shrink-0"
             >
               ZOOSINO
             </Link>
           </div>
 
-          <div className="hidden md:flex items-center space-x-4">
-            <NavigationLink routeTo="/" Name="Home" />
-            <NavigationLink routeTo="/rulette" Name="Turtlette" />
-            <NavigationLink routeTo="/account" Name="Account" />
+          <div className="shrink-0 mx-4">
+            <BalanceDisplay amount={0} />
           </div>
 
-          <div className="md:hidden">
-            <MenuButton
-              isOpen={isOpen}
-              onClick={() => setIsOpen(!isOpen)}
-            />
+          <div className="flex-1 flex justify-end items-center">
+            <div className="hidden md:flex items-center space-x-4">
+              <NavigationLink routeTo="/" Name="Home" />
+              <NavigationLink routeTo="/rulette" Name="Turtlette" />
+              <NavigationLink routeTo="/account" Name="Account" />
+            </div>
+
+            <div className="md:hidden ml-4">
+              <MenuButton isOpen={isOpen} onClick={() => setIsOpen(!isOpen)} />
+            </div>
           </div>
         </div>
       </div>
