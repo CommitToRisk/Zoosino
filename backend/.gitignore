@@ -19,5 +19,4 @@
 /assets/vendor/
 
 **/.vagrant
-/bin/
 ###< symfony/asset-mapper ###
