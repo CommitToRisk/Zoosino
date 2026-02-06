@@ -29,11 +29,13 @@ jobs:
       - name: Start Staging Container
         run: |
           docker run -d \
-            --network app-network \
-            --name symfony-new \
-            -v /srv/symfony-prod/.env.prod:/app/.env.prod:ro \
-            -e APP_ENV=prod \
-            symfony-app:latest
+          --network app-network \
+          --name symfony-new \
+          -v /srv/symfony-prod/.env.prod:/app/.env.prod:ro \
+          -e APP_ENV=prod \
+          -p 80:80 \
+          -p 443:443 \
+          symfony-app:latest
 
       - name: Wait for PHP + DB
         run: |
