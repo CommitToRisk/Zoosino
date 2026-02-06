@@ -32,12 +32,17 @@ jobs:
             --network app-network \
             --name symfony-new \
             -v /srv/symfony-prod/.env.prod:/app/.env.prod:ro \
-            -p 8081:80 \
             -e APP_ENV=prod \
             symfony-app:latest
 
-          # Wait a few seconds for the container to initialize
-          sleep 5
+      - name: Wait for PHP + DB
+        run: |
+          # Wait until Symfony can connect to the DB
+          for i in {1..20}; do
+            docker exec symfony-new php bin/console about >/dev/null 2>&1 && break
+            echo "Waiting for container to be ready..."
+            sleep 3
+          done
 
       - name: Post-Deployment Setup (Staging)
         run: |
@@ -55,15 +60,14 @@ jobs:
             exit 1
           fi
 
-      - name: The Great Swap
+      - name: Swap Staging → Production
         run: |
+          # Remove old production container if exists
           docker rm -f live-app 2>/dev/null || true
+
+          # Stop staging so we can rename it
           docker stop symfony-new
           docker rename symfony-new live-app
 
-          docker run -d \
-            --name live-app \
-            -p 80:80 \
-            --restart always \
-            -e APP_ENV=prod \
-            symfony-app:latest
+          # Start the renamed container on port 80
+          docker start live-app
