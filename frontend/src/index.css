@@ -23,8 +23,8 @@
 
 .dark {
   --main: #50b44b;
-  --secondary: hsl(233, 22%, 16%);
-  --secondary-light: #2b2d42;
+  --secondary: #14141d;
+  --secondary-light: #21212e;
   --background: #1e202f;
   --text-main: #EDF2F4;
   --text-muted: #8D99AE;

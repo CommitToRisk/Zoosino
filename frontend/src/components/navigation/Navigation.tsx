@@ -3,9 +3,11 @@ import { Link } from "react-router-dom";
 import { NavigationLink } from "./NavigationLink";
 import { MenuButton } from "./MenuButton";
 import { BalanceDisplay } from "../BalanceDisplay";
+import { useAuth } from "../../lib/auth";
 
 export function Navigation() {
   const [isOpen, setIsOpen] = useState(false);
+  const auth = useAuth();
 
   return (
     <nav className="bg-secondary shadow-sm">
@@ -29,6 +31,19 @@ export function Navigation() {
               <NavigationLink routeTo="/" Name="Home" />
               <NavigationLink routeTo="/rulette" Name="Turtlette" />
               <NavigationLink routeTo="/account" Name="Account" />
+              {!auth.user ? (
+                <>
+                  <NavigationLink routeTo="/login" Name="Login" />
+                  <NavigationLink routeTo="/register" Name="Register" />
+                </>
+              ) : (
+                <button
+                  onClick={() => auth.logout()}
+                  className="text-sm text-text-main px-3 py-1 rounded hover:bg-secondary-light"
+                >
+                  Logout
+                </button>
+              )}
             </div>
 
             <div className="md:hidden ml-4">
