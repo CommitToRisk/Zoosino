@@ -6,8 +6,8 @@
 
   --color-main: var(--main);
   --color-secondary: var(--secondary);
-  --color-secondary-light: var(--secondary-light);
   --color-background: var(--background);
+  --color-border: var(--border);
   --color-text-main: var(--text-main);
   --color-text-muted: var(--text-muted);
 }
@@ -15,17 +15,17 @@
 :root {
   --main: #50b44b;
   --secondary: #fafafa;
-  --secondary-light: #fcfcfc;
   --background: #ffffff;
-  --text-main: #2B2D42;
+  --border: #b9b9b9;
+  --text-main: #1d1e29;
   --text-muted: #8D99AE;
 }
 
 .dark {
   --main: #50b44b;
-  --secondary: #14141d;
-  --secondary-light: #21212e;
-  --background: #1e202f;
+  --secondary: hsl(240, 18%, 12%);
+  --background: hsl(233, 22%, 14%);
+  --border: rgb(37, 39, 53);
   --text-main: #EDF2F4;
   --text-muted: #8D99AE;
 }
