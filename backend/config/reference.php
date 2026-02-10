@@ -1055,7 +1055,6 @@ use Symfony\Component\Config\Loader\ParamConfigurator as Param;
  * @psalm-type SecurityConfig = array{
  *     access_denied_url?: scalar|Param|null, // Default: null
  *     session_fixation_strategy?: "none"|"migrate"|"invalidate"|Param, // Default: "migrate"
- *     hide_user_not_found?: bool|Param, // Deprecated: The "hide_user_not_found" option is deprecated and will be removed in 8.0. Use the "expose_security_errors" option instead.
  *     expose_security_errors?: \Symfony\Component\Security\Http\Authentication\ExposeSecurityLevel::None|\Symfony\Component\Security\Http\Authentication\ExposeSecurityLevel::AccountStatus|\Symfony\Component\Security\Http\Authentication\ExposeSecurityLevel::All|Param, // Default: "none"
  *     erase_credentials?: bool|Param, // Default: true
  *     access_decision_manager?: array{
@@ -1291,9 +1290,7 @@ use Symfony\Component\Config\Loader\ParamConfigurator as Param;
  *                     claim?: scalar|Param|null, // Claim which contains the user identifier (e.g.: sub, email..). // Default: "sub"
  *                     audience: scalar|Param|null, // Audience set in the token, for validation purpose.
  *                     issuers: list<scalar|Param|null>,
- *                     algorithm?: array<mixed>,
  *                     algorithms: list<scalar|Param|null>,
- *                     key?: scalar|Param|null, // Deprecated: The "key" option is deprecated and will be removed in 8.0. Use the "keyset" option instead. // JSON-encoded JWK used to sign the token (must contain a "kty" key).
  *                     keyset?: scalar|Param|null, // JSON-encoded JWKSet used to sign the token (must contain a list of valid public keys).
  *                     encryption?: bool|array{
  *                         enabled?: bool|Param, // Default: false
@@ -1511,6 +1508,34 @@ use Symfony\Component\Config\Loader\ParamConfigurator as Param;
  *     generate_final_classes?: bool|Param, // Default: true
  *     generate_final_entities?: bool|Param, // Default: false
  * }
+ * @psalm-type NelmioCorsConfig = array{
+ *     defaults?: array{
+ *         allow_credentials?: bool|Param, // Default: false
+ *         allow_origin?: list<scalar|Param|null>,
+ *         allow_headers?: list<scalar|Param|null>,
+ *         allow_methods?: list<scalar|Param|null>,
+ *         allow_private_network?: bool|Param, // Default: false
+ *         expose_headers?: list<scalar|Param|null>,
+ *         max_age?: scalar|Param|null, // Default: 0
+ *         hosts?: list<scalar|Param|null>,
+ *         origin_regex?: bool|Param, // Default: false
+ *         forced_allow_origin_value?: scalar|Param|null, // Default: null
+ *         skip_same_as_origin?: bool|Param, // Default: true
+ *     },
+ *     paths?: array<string, array{ // Default: []
+ *         allow_credentials?: bool|Param,
+ *         allow_origin?: list<scalar|Param|null>,
+ *         allow_headers?: list<scalar|Param|null>,
+ *         allow_methods?: list<scalar|Param|null>,
+ *         allow_private_network?: bool|Param,
+ *         expose_headers?: list<scalar|Param|null>,
+ *         max_age?: scalar|Param|null, // Default: 0
+ *         hosts?: list<scalar|Param|null>,
+ *         origin_regex?: bool|Param,
+ *         forced_allow_origin_value?: scalar|Param|null, // Default: null
+ *         skip_same_as_origin?: bool|Param,
+ *     }>,
+ * }
  * @psalm-type ConfigType = array{
  *     imports?: ImportsConfig,
  *     parameters?: ParametersConfig,
@@ -1524,6 +1549,7 @@ use Symfony\Component\Config\Loader\ParamConfigurator as Param;
  *     twig_extra?: TwigExtraConfig,
  *     security?: SecurityConfig,
  *     monolog?: MonologConfig,
+ *     nelmio_cors?: NelmioCorsConfig,
  *     "when@dev"?: array{
  *         imports?: ImportsConfig,
  *         parameters?: ParametersConfig,
@@ -1540,6 +1566,7 @@ use Symfony\Component\Config\Loader\ParamConfigurator as Param;
  *         security?: SecurityConfig,
  *         monolog?: MonologConfig,
  *         maker?: MakerConfig,
+ *         nelmio_cors?: NelmioCorsConfig,
  *     },
  *     "when@prod"?: array{
  *         imports?: ImportsConfig,
@@ -1554,6 +1581,7 @@ use Symfony\Component\Config\Loader\ParamConfigurator as Param;
  *         twig_extra?: TwigExtraConfig,
  *         security?: SecurityConfig,
  *         monolog?: MonologConfig,
+ *         nelmio_cors?: NelmioCorsConfig,
  *     },
  *     "when@test"?: array{
  *         imports?: ImportsConfig,
@@ -1569,6 +1597,7 @@ use Symfony\Component\Config\Loader\ParamConfigurator as Param;
  *         twig_extra?: TwigExtraConfig,
  *         security?: SecurityConfig,
  *         monolog?: MonologConfig,
+ *         nelmio_cors?: NelmioCorsConfig,
  *     },
  *     ...<string, ExtensionType|array{ // extra keys must follow the when@%env% pattern or match an extension alias
  *         imports?: ImportsConfig,
