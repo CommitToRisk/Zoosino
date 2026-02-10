@@ -1,7 +1,7 @@
 import { useState } from "react";
 import { useNavigate, Link } from "react-router-dom";
 import { useAuth } from "@/lib/auth";
-import { FormField } from "@/components/form/FormField";
+import { FormField } from "@/components/fields/FormField";
 
 export function LoginPage() {
   const [phrase, setPhrase] = useState("");
@@ -15,7 +15,7 @@ export function LoginPage() {
     setError("");
 
     try {
-      await login({ phrase });
+      await login(phrase);
       
       navigate("/"); 
     } catch (err) {

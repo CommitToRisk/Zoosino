@@ -1,19 +1,19 @@
 import React, { createContext, useContext, useEffect, useState } from 'react';
 import api from './api';
+import type { User } from '@/types';
 
 type AuthContextType = {
-  user: any | null;
+  user: User | null;
   isLoading: boolean;
-  login: (credentials: any) => Promise<any>;
-  register: (data: any) => Promise<any>;
-  logout: () => void;
+  login: (phrase: string) => Promise<any>;
+  updateDisplayName: (newName: string) => Promise<void>;
   checkAuth: () => Promise<any>;
 };
 
 const AuthContext = createContext<AuthContextType | undefined>(undefined);
 
 
-export const AuthProvider: React.FC<React.PropsWithChildren<{}>> = ({ children }) => {
+export function AuthProvider({ children }: { children: React.ReactNode }) {
   const [user, setUser] = useState<any | null>(null);
   const [isLoading, setIsLoading] = useState<boolean>(true);
 
@@ -40,21 +40,17 @@ export const AuthProvider: React.FC<React.PropsWithChildren<{}>> = ({ children }
     await checkAuth();
   }
 
-  async function register(data: any) {
-    await api.post('/api/register', data);
-    // optionally login immediately after registration
-  }
-
-  function logout() {
+  async function updateDisplayName(newName: string) {
     try {
-      api.post('/api/logout');
-    } finally {
-      setUser(null);
+      await api.put('/api/me', { displayName: newName });
+      await checkAuth();
+    } catch (e) {
+      console.error("Failed to update display name", e);
     }
   }
 
   return (
-    <AuthContext.Provider value={{ user, isLoading, login, register, logout, checkAuth }}>
+    <AuthContext.Provider value={{ user, isLoading, login, updateDisplayName, checkAuth }}>
       {children}
     </AuthContext.Provider>
   );

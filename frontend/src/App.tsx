@@ -4,6 +4,7 @@ import { HomePage } from "./pages/HomePage";
 import { ThemeProvider } from "./lib/theme-provider";
 import { AuthProvider } from "./lib/auth";
 import { LoginPage } from "./pages/LoginPage";
+import { AccountPage } from "./pages/AccountPage";
 
 function App() {
   return (
@@ -18,7 +19,7 @@ function App() {
                 path="rulette"
                 element={<h1>Rulette is under construction</h1>}
               />
-              <Route path="profile" element={<h1>User profile</h1>} />
+              <Route path="account" element={<AccountPage/>} />
               <Route path="*" element={<h1>404 - Site not found :( </h1>} />
             </Route>
           </Routes>

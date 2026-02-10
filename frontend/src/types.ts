@@ -1,4 +1,5 @@
 export type User = {
-    username: string;
+    displayName: string;
+    phrase: string;
     balance: number;
 };
