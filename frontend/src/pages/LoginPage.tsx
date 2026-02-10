@@ -1,18 +1,19 @@
 import React from 'react';
 import { useNavigate } from 'react-router-dom';
 import { useAuth } from '../lib/auth';
-import { AuthForm } from '../components/AuthForm';
 
-export const LoginPage: React.FC = () => {
+export function LoginPage() {
   const auth = useAuth();
-  const navigate = useNavigate();
 
-  async function handle(values: { username?: string; password: string }) {
-    await auth.login(values.username, values.password);
-    navigate('/');
+  const handleSubmit = async (e: React.FormEvent) => {
+    e.preventDefault();
   }
 
-  return <AuthForm showUsername submitLabel="Log in" onSubmit={handle} />;
-};
+  return (
+    <form onSubmit={handleSubmit} className="max-w-md mx-auto bg-secondary p-6 rounded-lg shadow-sm">
+      <h2 className="text-2xl font-semibold mb-4 text-text-main">Login</h2>
 
-export default LoginPage;
+      
+    </form>
+  );
+};
