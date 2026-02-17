@@ -69,7 +69,7 @@ export function HomePage() {
           </div>
         </div>
 
-        <div className="bg-secondary/50 p-8 rounded-xl border border-dashed border-border flex flex-col items-center text-center hover:bg-secondary transition-colors">
+        <div className="bg-secondary p-8 rounded-xl border border-dashed border-border flex flex-col items-center text-center">
           <h2 className="text-2xl font-bold text-text-main mb-4">Just Browsing?</h2>
           <p className="text-text-muted mb-8 grow">
             Jump straight into the action with a temporary guest account. No strings attached.

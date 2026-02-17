@@ -17,23 +17,24 @@
 
 :root {
   --main: #50b44b;
-  --secondary: #fafafa;
+  --secondary: #f8fafc; 
   --background: #ffffff;
-  --border: #b9b9b9;
-  --text-main: #1d1e29;
-  --text-muted: #8D99AE;
   
-  --warning: #f8b643; 
-  --warning-hover: #e9973f;
+  --border: #e2e8f0; 
+  --text-main: #0f172a; 
+  --text-muted: #64748b;
+  
+  --warning: #f59e0b; 
+  --warning-hover: #d97706;
 }
 
 .dark {
   --main: #50b44b;
-  --secondary: hsl(240, 18%, 12%);
-  --background: hsl(233, 22%, 14%);
-  --border: rgb(37, 39, 53);
-  --text-main: #EDF2F4;
-  --text-muted: #8D99AE;
+  --background: #182133; 
+  --secondary: #121b30; 
+  --border: #1e293b; 
+  --text-main: #f8fafc; 
+  --text-muted: #94a3b8;
 
   --warning: #fbbf24;
   --warning-hover: #f59e0b;

@@ -6,6 +6,7 @@ import { AuthProvider } from "./lib/auth";
 import { LoginPage } from "./pages/LoginPage";
 import { AccountPage } from "./pages/AccountPage";
 import { RegisterPage } from "./pages/RegisterPage";
+import { NotFoundPage } from "./pages/NotFoundPage";
 
 function App() {
   return (
@@ -22,7 +23,7 @@ function App() {
                 element={<h1>Rulette is under construction</h1>}
               />
               <Route path="account" element={<AccountPage/>} />
-              <Route path="*" element={<h1>404 - Site not found :( </h1>} />
+              <Route path="*" element={<NotFoundPage/>} />
             </Route>
           </Routes>
         </BrowserRouter>
