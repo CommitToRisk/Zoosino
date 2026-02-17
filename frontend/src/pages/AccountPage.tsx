@@ -1,11 +1,14 @@
 import { Link, useNavigate } from "react-router-dom";
 import { useAuth } from "@/lib/auth";
 import { DisplayField } from "@/components/form/DisplayField";
+import { usePageTitle } from "@/components/usePageTitle";
 
 
 export function AccountPage() {
   const { user, logout } = useAuth();
   const navigate = useNavigate();
+
+  usePageTitle("My Account");
 
   if (!user) return <div className="text-center mt-20 text-text-main animate-pulse">Loading profile...</div>;
 

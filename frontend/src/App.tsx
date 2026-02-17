@@ -19,8 +19,8 @@ function App() {
               <Route path="login" element={<LoginPage />} />
               <Route path="register" element={<RegisterPage />} />
               <Route
-                path="rulette"
-                element={<h1>Rulette is under construction</h1>}
+                path="turtlette"
+                element={<h1>Turtlette is under construction</h1>}
               />
               <Route path="account" element={<AccountPage/>} />
               <Route path="*" element={<NotFoundPage/>} />

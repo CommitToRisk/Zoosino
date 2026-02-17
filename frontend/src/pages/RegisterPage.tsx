@@ -3,8 +3,12 @@ import { useNavigate, Link } from "react-router-dom";
 import { useAuth } from "@/lib/auth";
 import { FormField } from "@/components/form/FormField";
 import { BackToHome } from "@/components/navigation/BackToHome";
+import { usePageTitle } from "@/components/usePageTitle";
 
 export function RegisterPage() {
+
+  usePageTitle("Register");
+
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
   const [confirmPassword, setConfirmPassword] = useState("");

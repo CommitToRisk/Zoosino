@@ -1,10 +1,13 @@
 import { useState } from "react";
 import { Link } from "react-router-dom";
 import { useAuth } from "@/lib/auth";
+import { usePageTitle } from "@/components/usePageTitle";
 
 export function HomePage() {
   const { user, isLoading, loginGuest } = useAuth();
   const [isGuestLoading, setIsGuestLoading] = useState(false);
+
+  usePageTitle("Home");
 
   const handleGuestLogin = async () => {
     setIsGuestLoading(true);
