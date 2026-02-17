@@ -15,6 +15,7 @@ type AuthContextType = {
   loginGuest: () => Promise<void>;
   logout: () => Promise<void>;
   checkAuth: () => Promise<void>;
+  updateBalance: (newBalance: number) => void;
 };
 
 const AuthContext = createContext<AuthContextType | undefined>(undefined);
@@ -37,6 +38,12 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
   useEffect(() => {
     checkAuth();
   }, []);
+
+  function updateBalance(newBalance: number) {
+    if (user) {
+      setUser({ ...user, balance: newBalance });
+    }
+  };
 
   async function login(credentials: LoginCredentials) {
     await api.post('/api/login', credentials);
@@ -69,7 +76,8 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
       register, 
       loginGuest, 
       logout, 
-      checkAuth 
+      checkAuth,
+      updateBalance
     }}>
       {children}
     </AuthContext.Provider>

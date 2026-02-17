@@ -5,6 +5,7 @@ import { ThemeProvider } from "./lib/theme-provider";
 import { AuthProvider } from "./lib/auth";
 import { LoginPage } from "./pages/LoginPage";
 import { AccountPage } from "./pages/AccountPage";
+import { RegisterPage } from "./pages/RegisterPage";
 
 function App() {
   return (
@@ -15,6 +16,7 @@ function App() {
             <Route path="/" element={<Layout />}>
               <Route index element={<HomePage />} />
               <Route path="login" element={<LoginPage />} />
+              <Route path="register" element={<RegisterPage />} />
               <Route
                 path="rulette"
                 element={<h1>Rulette is under construction</h1>}

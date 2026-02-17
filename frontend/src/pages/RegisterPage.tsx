@@ -4,24 +4,34 @@ import { useAuth } from "@/lib/auth";
 import { FormField } from "@/components/form/FormField";
 import { BackToHome } from "@/components/navigation/BackToHome";
 
-export function LoginPage() {
+export function RegisterPage() {
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
+  const [confirmPassword, setConfirmPassword] = useState("");
   const [error, setError] = useState("");
   
-  const { login, isLoading } = useAuth();
+  const { register, isLoading } = useAuth();
   const navigate = useNavigate();
 
-  const handleSubmit = async (e: React.SubmitEvent) => {
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     setError("");
 
+    if (password !== confirmPassword) {
+        setError("Passwords do not match!");
+        return;
+    }
+
     try {
-      await login({ username, password });
+      await register({ username, password });
       
       navigate("/"); 
-    } catch (err) {
-      setError("Failed to login. Please check your credentials.");
+    } catch (err: any) {
+      if (err.response?.status === 409) {
+          setError("Username is already taken.");
+      } else {
+          setError("Registration failed. Please try again.");
+      }
     }
   };
 
@@ -32,8 +42,8 @@ export function LoginPage() {
         className="w-full max-w-md mx-auto bg-secondary p-8 rounded-xl shadow-md border border-border"
       >
         <div className="text-center mb-8">
-          <h2 className="text-3xl font-bold text-primary mb-2">Welcome Back</h2>
-          <p className="text-text-muted">Login to continue your winning streak</p>
+          <h2 className="text-3xl font-bold text-primary mb-2">Create Account</h2>
+          <p className="text-text-muted">Start your journey at Zoosino today</p>
         </div>
 
         {error && (
@@ -58,23 +68,30 @@ export function LoginPage() {
           placeholder="verysecurepassword"
         />
 
+        <FormField
+          label="Confirm Password"
+          type="password"
+          value={confirmPassword}
+          onChange={setConfirmPassword}
+          placeholder="verysecurepassword"
+        />
+
         <button
           type="submit"
           disabled={isLoading}
           className="w-full mt-4 bg-primary hover:bg-primary-hover text-white text-lg font-bold py-2 rounded disabled:opacity-50 disabled:cursor-not-allowed transition-colors"
         >
-          {isLoading ? "Logging in..." : "Login"}
+          {isLoading ? "Creating Account..." : "Register"}
         </button>
         
         <div className="mt-6 text-center text-sm">
           <p className="text-text-muted">
-            Don't have an account?{" "}
-            <Link to="/register" className="text-primary hover:underline font-bold">
-              Register here
+            Already have an account?{" "}
+            <Link to="/login" className="text-primary hover:underline font-bold">
+              Login here
             </Link>
           </p>
         </div>
-
       </form>
 
       <BackToHome />

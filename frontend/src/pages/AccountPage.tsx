@@ -1,86 +1,64 @@
-import { useState } from "react";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { useAuth } from "@/lib/auth";
-import { DisplayField } from "@/components/fields/DisplayField";
-import { EditableField } from "@/components/fields/EditableField";
-import { HiddenField } from "@/components/fields/HiddenField";
+import { DisplayField } from "@/components/form/DisplayField";
+// import { EditableField } from "@/components/form/EditableField";
 
 
 export function AccountPage() {
-  const { user, updateDisplayName } = useAuth();
-  
-  const [isEditing, setIsEditing] = useState(false);
-  const [newName, setNewName] = useState("");
-  const [isSaving, setIsSaving] = useState(false);
+  const { user, logout } = useAuth();
+  const navigate = useNavigate();
 
-  if (!user) return <div className="text-center mt-20 text-text-main">Loading...</div>;
+  if (!user) return <div className="text-center mt-20 text-text-main animate-pulse">Loading profile...</div>;
 
-  const startEditing = () => {
-    setNewName(user.displayName || "");
-    setIsEditing(true);
-  };
-
-  const handleSaveName = async () => {
-    if (!newName.trim()) return;
-    setIsSaving(true);
-    try {
-      if (updateDisplayName) await updateDisplayName(newName);
-      setIsEditing(false);
-    } catch (e) {
-      alert("Error saving name");
-    } finally {
-      setIsSaving(false);
-    }
+  const handleLogout = async () => {
+    await logout();
+    navigate("/");
   };
 
   return (
-    <div className="flex flex-col items-center justify-around p-4">
+    <div className="flex flex-col items-center justify-start pt-10 p-4 min-h-[80vh]">
+      
+      <h1 className="text-3xl font-bold text-primary mb-8">My Profile</h1>
+
       <div className="w-full max-w-md bg-secondary rounded-xl shadow-lg border border-border overflow-hidden">
         
-        {isEditing ? (
-          <EditableField 
-            label="Display Name"
-            value={newName}
-            onChange={setNewName}
-            onSave={handleSaveName}
-            onCancel={() => setIsEditing(false)}
-            isSaving={isSaving}
-          />
-        ) : (
-          <DisplayField 
-            label="Display Name" 
-            value={user.displayName || "Unknown"} 
-            action={
-              <button 
-                onClick={startEditing}
-                className="text-text-muted hover:text-primary transition-colors"
-              >
-                <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M17 3a2.828 2.828 0 1 1 4 4L7.5 20.5 2 22l1.5-5.5L17 3z"/></svg>
-              </button>
-            }
-          />
+        {user.isGuest && (
+          <div className="bg-yellow-500/10 border-b border-yellow-500/50 p-4 text-center">
+            <p className="text-text font-bold mb-2">⚠️ Guest Account</p>
+            <p className="text-sm mb-3">
+              Your progress is not permanently saved. Register to keep your balance!
+            </p>
+            <Link 
+              to="/register" 
+              className="text-sm bg-yellow-600 hover:bg-yellow-700 text-white px-3 py-1 rounded transition-colors"
+            >
+              Upgrade to Full Account
+            </Link>
+          </div>
         )}
 
         <DisplayField 
-          label="Current Balance" 
-          value={`${user.balance ? user.balance : 0} Points`} 
+          label="Username" 
+          value={user.username} 
         />
 
-        <HiddenField 
-          label="Login Phrase" 
-          value={user.phrase || ""} 
+        <DisplayField 
+          label="Current Balance" 
+          value={`${user.balance?.toLocaleString()} Credits`} 
         />
         
       </div>
 
-      <div className="text-center mt-8">
-        <Link 
-          to="/login"
-          className="inline-block border border-red-500/50 text-red-500 hover:bg-red-500 hover:text-white px-6 py-3 rounded-lg transition-all font-bold uppercase tracking-wider text-sm"
+      <div className="text-center mt-8 w-full max-w-md">
+        <button 
+          onClick={handleLogout}
+          className="w-full border border-red-500/50 text-red-500 hover:bg-red-500 hover:text-white px-6 py-3 rounded-lg transition-all font-bold uppercase tracking-wider text-sm flex items-center justify-center gap-2"
         >
-          Change Account
-        </Link>
+          <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4"></path><polyline points="16 17 21 12 16 7"></polyline><line x1="21" y1="12" x2="9" y2="12"></line></svg>
+          Log Out
+        </button>
       </div>
+      
     </div>
   );
 }
