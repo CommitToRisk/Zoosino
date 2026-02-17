@@ -1,21 +1,22 @@
 import { useState } from "react";
 import { useNavigate, Link } from "react-router-dom";
 import { useAuth } from "@/lib/auth";
-import { FormField } from "@/components/fields/FormField";
+import { FormField } from "@/components/form/FormField";
 
 export function LoginPage() {
-  const [phrase, setPhrase] = useState("");
+  const [username, setUsername] = useState("");
+  const [password, setPassword] = useState("");
   const [error, setError] = useState("");
   
   const { login, isLoading } = useAuth();
   const navigate = useNavigate();
 
-  const handleSubmit = async (e: React.FormEvent) => {
+  const handleSubmit = async (e: React.SubmitEvent) => {
     e.preventDefault();
     setError("");
 
     try {
-      await login(phrase);
+      await login({ username, password });
       
       navigate("/"); 
     } catch (err) {
@@ -30,7 +31,7 @@ export function LoginPage() {
         className="w-full max-w-md mx-auto bg-secondary p-8 rounded-xl shadow-md border border-border"
       >
         <div className="text-center mb-8">
-          <h2 className="text-3xl font-bold text-primary mb-2">Change account?</h2>
+          <h2 className="text-3xl font-bold text-primary mb-2">Welcome Back</h2>
           <p className="text-text-muted">Login to continue your winning streak</p>
         </div>
 
@@ -41,21 +42,38 @@ export function LoginPage() {
         )}
 
         <FormField
-          label="Your idenification phrase:"
+          label="Username"
           type="text"
-          value={phrase}
-          onChange={setPhrase}
-          placeholder="AwesomeGambler67"
+          value={username}
+          onChange={setUsername}
+          placeholder="Your username"
+        />
+
+        <FormField
+          label="Password"
+          type="password"
+          value={password}
+          onChange={setPassword}
+          placeholder="••••••••"
         />
 
         <button
           type="submit"
           disabled={isLoading}
-          className="w-full mt-4 bg-primary hover:bg-primary-hover text-white text-lg font-bold py-2 rounded disabled:opacity-50 disabled:cursor-not-allowed "
+          className="w-full mt-4 bg-primary hover:bg-primary-hover text-white text-lg font-bold py-2 rounded disabled:opacity-50 disabled:cursor-not-allowed transition-colors"
         >
           {isLoading ? "Logging in..." : "Login"}
         </button>
-       
+        
+        <div className="mt-6 text-center text-sm">
+          <p className="text-text-muted">
+            Don't have an account?{" "}
+            <Link to="/register" className="text-primary hover:underline font-bold">
+              Register here
+            </Link>
+          </p>
+        </div>
+
       </form>
     </div>
   );

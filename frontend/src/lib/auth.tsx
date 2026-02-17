@@ -1,17 +1,23 @@
 import React, { createContext, useContext, useEffect, useState } from 'react';
-import api from './api';
-import type { User } from '@/types';
+import api from '@/lib/api';
+import type { User } from '@/types'; 
+
+type LoginCredentials = {
+  username: string;
+  password?: string;
+};
 
 type AuthContextType = {
   user: User | null;
   isLoading: boolean;
-  login: (phrase: string) => Promise<any>;
-  updateDisplayName: (newName: string) => Promise<void>;
-  checkAuth: () => Promise<any>;
+  login: (credentials: LoginCredentials) => Promise<void>;
+  register: (credentials: LoginCredentials) => Promise<void>;
+  loginGuest: () => Promise<void>;
+  logout: () => Promise<void>;
+  checkAuth: () => Promise<void>;
 };
 
 const AuthContext = createContext<AuthContextType | undefined>(undefined);
-
 
 export function AuthProvider({ children }: { children: React.ReactNode }) {
   const [user, setUser] = useState<any | null>(null);
@@ -19,10 +25,8 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
 
   const checkAuth = async () => {
     try {
-      const response = await api.get('/me');
-      const data = response.data;
-      console.log('auth check response:', data);
-      setUser(data);
+      const response = await api.get('/api/me');
+      setUser(response.data);
     } catch (e) {
       setUser(null);
     } finally {
@@ -32,25 +36,41 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
 
   useEffect(() => {
     checkAuth();
-    console.log('checking auth');
   }, []);
 
-  async function login(credentials: any) {
+  async function login(credentials: LoginCredentials) {
     await api.post('/api/login', credentials);
     await checkAuth();
   }
 
-  async function updateDisplayName(newName: string) {
+  async function register(credentials: LoginCredentials) {
+    await api.post('/api/register', credentials);
+    await checkAuth();
+  }
+
+  async function loginGuest() {
+    await api.post('/api/guest'); 
+    await checkAuth();
+  }
+
+  async function logout() {
     try {
-      await api.put('/api/me', { displayName: newName });
-      await checkAuth();
-    } catch (e) {
-      console.error("Failed to update display name", e);
+      await api.post('/api/logout');
+    } finally {
+      setUser(null);
     }
   }
 
   return (
-    <AuthContext.Provider value={{ user, isLoading, login, updateDisplayName, checkAuth }}>
+    <AuthContext.Provider value={{ 
+      user, 
+      isLoading, 
+      login, 
+      register, 
+      loginGuest, 
+      logout, 
+      checkAuth 
+    }}>
       {children}
     </AuthContext.Provider>
   );
