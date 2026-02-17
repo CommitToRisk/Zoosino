@@ -28,8 +28,9 @@ export function HomePage() {
   if (user) {
     return (
       <div className="p-10 text-center max-w-4xl mx-auto">
+        
         <h1 className="text-4xl font-bold text-text-main mb-4">
-          Welcome <span className="text-primary">{user.username}</span>!
+          {user.isGuest ? "Welcome" : "Welcome back"} <span className="text-primary">{user.username}</span>!
         </h1>
         <p className="text-text-muted mb-8">Ready to try your luck today?</p>
         

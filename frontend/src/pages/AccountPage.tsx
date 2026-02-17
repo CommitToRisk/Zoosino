@@ -1,7 +1,6 @@
 import { Link, useNavigate } from "react-router-dom";
 import { useAuth } from "@/lib/auth";
 import { DisplayField } from "@/components/form/DisplayField";
-// import { EditableField } from "@/components/form/EditableField";
 
 
 export function AccountPage() {
@@ -23,14 +22,18 @@ export function AccountPage() {
       <div className="w-full max-w-md bg-secondary rounded-xl shadow-lg border border-border overflow-hidden">
         
         {user.isGuest && (
-          <div className="bg-yellow-500/10 border-b border-yellow-500/50 p-4 text-center">
-            <p className="text-text font-bold mb-2">⚠️ Guest Account</p>
-            <p className="text-sm mb-3">
+          <div className="bg-warning/10 border-b border-warning/20 p-4 text-center">
+            <p className="text-warning font-bold mb-2 flex items-center justify-center gap-2">
+              ⚠️ Guest Account
+            </p>
+            
+            <p className="text-sm text-text-main mb-3">
               Your progress is not permanently saved. Register to keep your balance!
             </p>
+            
             <Link 
               to="/register" 
-              className="text-sm bg-yellow-600 hover:bg-yellow-700 text-white px-3 py-1 rounded transition-colors"
+              className="inline-block text-sm bg-warning hover:bg-warning-hover text-black/80 font-bold px-4 py-1.5 rounded transition-colors"
             >
               Upgrade to Full Account
             </Link>
