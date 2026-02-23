@@ -30,7 +30,7 @@ export function Navigation() {
             </Link>
 
             <div className="hidden xl:flex items-center space-x-1">
-              <NavigationLink routeTo="/rulette" Name="Turtlette" />
+              <NavigationLink routeTo="/turtlette" Name="Turtlette" />
               <NavigationLink routeTo="/pengjack" Name="PengJack" />
               <NavigationLink routeTo="/sloth" Name="Sloth" />
               <div className="w-px h-4 bg-border/40 mx-2"></div>
@@ -74,7 +74,7 @@ export function Navigation() {
               callback={() => setIsOpen(false)}
             />
             <NavigationLink
-              routeTo="/rulette"
+              routeTo="/turtlette"
               Name="Turtlette"
               callback={() => setIsOpen(false)}
             />
