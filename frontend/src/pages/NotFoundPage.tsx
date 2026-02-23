@@ -1,5 +1,5 @@
 import { BackToHome } from "@/components/navigation/BackToHome";
-import { usePageTitle } from "@/components/usePageTitle";
+import { usePageTitle } from "@/hooks/usePageTitle";
 
 export function NotFoundPage() {
   usePageTitle("404 Not Found");

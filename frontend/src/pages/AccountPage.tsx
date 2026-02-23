@@ -1,7 +1,7 @@
 import { Link, useNavigate } from "react-router-dom";
 import { useAuth } from "@/lib/auth";
 import { DisplayField } from "@/components/form/DisplayField";
-import { usePageTitle } from "@/components/usePageTitle";
+import { usePageTitle } from "@/hooks/usePageTitle";
 
 
 export function AccountPage() {

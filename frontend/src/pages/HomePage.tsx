@@ -1,7 +1,7 @@
 import { useState } from "react";
 import { Link } from "react-router-dom";
 import { useAuth } from "@/lib/auth";
-import { usePageTitle } from "@/components/usePageTitle";
+import { usePageTitle } from "@/hooks/usePageTitle";
 
 export function HomePage() {
   const { user, isLoading, loginGuest } = useAuth();
