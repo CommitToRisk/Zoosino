@@ -1,5 +1,5 @@
 import { useState, useEffect, useRef } from "react";
-import wheelImg from "@/assets/react.svg";
+import wheelImg from "@/assets/wheel.png";
 
 export const ROULETTE_ORDER = [
   0, 32, 15, 19, 4, 21, 2, 25, 17, 34, 6, 27, 13, 36, 11, 30, 8, 23, 10, 5, 
