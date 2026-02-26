@@ -7,7 +7,7 @@ export function Layout() {
   const { user } = useAuth();
 
   return (
-    <div className="min-h-screen bg-background flex flex-col font-sans">
+    <div className="min-h-screen bg-background flex flex-col font-sans overflow-x-hidden">
       
       {user && <Navigation />}
 

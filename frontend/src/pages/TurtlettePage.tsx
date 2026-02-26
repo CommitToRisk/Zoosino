@@ -85,7 +85,7 @@ export function TurtlettePage() {
         onClose={closeNotification}
       />
 
-      <div className="flex flex-col lg:flex-row items-center justify-center gap-4 lg:gap-12 h-[calc(100vh-6rem)] min-h-125 w-full max-w-5xl mx-auto overflow-hidden p-4">
+      <div className="flex flex-col lg:flex-row items-center justify-center gap-6 lg:gap-12 w-full max-w-5xl mx-auto py-6">
         <div className="flex flex-col items-center justify-center flex-1 shrink-0 w-full lg:w-1/2">
           <h1 className="text-2xl sm:text-3xl lg:text-4xl font-bold text-primary mb-6 uppercase tracking-wider text-center">
             Turtlette
@@ -95,6 +95,8 @@ export function TurtlettePage() {
             isZoomed={isZoomed}
             isSpinning={isSpinning}
             winningNumber={winningNumber}
+            spinDurationMs={4000}
+            turtlePopOutMs={3500}
           />
         </div>
 

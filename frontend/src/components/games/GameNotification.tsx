@@ -23,7 +23,7 @@ export function GameNotification({ message, type, onClose, autoCloseMs = 4000 }:
     <div className={`fixed top-24 left-1/2 -translate-x-1/2 z-100 px-6 py-4 rounded-xl border-2 min-w-75 text-center font-bold text-lg transition-all ${
       type === "win" 
         ? "bg-primary text-white border-primary-hover shadow-primary/50" 
-        : "bg-warning text-text-main border-warning-hover shadow-warning/50"
+        : "bg-warning/80 text-text-main border-warning-hover shadow-warning/50"
     }`}>
       {message}
       <button 
