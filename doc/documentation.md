@@ -56,6 +56,23 @@ The sloth drops 3 random fruits from the tree. If they are the same, the player 
 - framework: symfony
 - cost: free
 
+## Contribution
+- F. Heger:
+    - VPS deployment
+    - database setup
+- M. Pop:
+    - frontend
+    - registration
+    - login
+    - guest acces
+    - Turtlette minigame
+- J. Čihař:
+- Z. Relich:
+    - documentation
+- Z. X. Yang:
+    - teamleading
+    - project management
+
 ## Contacts
 - relich@spsejecna.cz
 - heger@spsejecna.cz
