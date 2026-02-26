@@ -11,10 +11,10 @@ use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Routing\Attribute\Route;
 use Symfony\Component\PasswordHasher\Hasher\UserPasswordHasherInterface;
 
-#[Route('/api/v1', name: 'api_')]
+#[Route('/api', name: 'api_')]
 class UserController extends AbstractController
 {
-    #[Route('/auth', name: 'auth_check', methods: ['GET'])]
+    #[Route('/me', name: 'auth_check', methods: ['GET'])]
     public function checkAuth(Security $security): JsonResponse
     {
         $user = $security->getUser();
@@ -96,6 +96,19 @@ class UserController extends AbstractController
             'username' => $user->getUserIdentifier(),
             'score' => $user->getScore()
         ], 200);
+    }
+
+    /**
+     * Logs the user out of the current session.
+     */
+    #[Route('/logout', name: 'user_logout', methods: ['POST'])]
+    public function logout(Security $security): JsonResponse
+    {
+        $security->logout(false);
+
+        return $this->json([
+            'message' => 'Odhlášení proběhlo úspěšně.'
+        ]);
     }
 
     #[Route('/guest', name: 'user_guest', methods: ['POST'])]
