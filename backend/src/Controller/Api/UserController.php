@@ -45,7 +45,7 @@ class UserController extends AbstractController
 
         $existingUser = $entityManager->getRepository(User::class)->findOneBy(['username' => $data['username']]);
         if ($existingUser) {
-            return $this->json(['error' => 'Uživatel s tímto jménem už existuje'], 409); // 409 Conflict
+            return $this->json(['error' => 'Uživatel s tímto jménem už existuje'], 409);
         }
 
         $user = new User();
@@ -98,9 +98,6 @@ class UserController extends AbstractController
         ], 200);
     }
 
-    /**
-     * Logs the user out of the current session.
-     */
     #[Route('/logout', name: 'user_logout', methods: ['POST'])]
     public function logout(Security $security): JsonResponse
     {
@@ -134,8 +131,45 @@ class UserController extends AbstractController
 
         return $this->json([
             'message' => 'Přihlášen jako host!',
+            'isGuest' => true,
             'username' => $guest->getUserIdentifier(),
             'score' => $guest->getScore()
         ], 200);
     }
+
+    #[Route('/leaderboard', name: 'leaderboard', methods: ['GET'])]
+        public function leaderboard(
+            EntityManagerInterface $entityManager,
+            Security $security
+        ): JsonResponse
+        {
+            $users = $entityManager->getRepository(User::class)->findBy([], ['score' => 'DESC']);
+
+            $leaderboard = [];
+            $myPosition = null;
+
+            $currentUser = $security->getUser();
+            $currentUsername = $currentUser ? $currentUser->getUserIdentifier() : null;
+
+            $position = 1;
+            foreach ($users as $user) {
+                $leaderboard[] = [
+                    'username' => $user->getUsername(),
+                    'balance' => $user->getScore(),
+                ];
+
+                if ($currentUsername && $user->getUsername() === $currentUsername) {
+                    $myPosition = $position;
+                }
+
+                $position++;
+            }
+
+            return $this->json([
+                'leaderboard' => $leaderboard,
+                'myPosition' => $myPosition
+            ], 200);
+        }
 }
+
+

@@ -4,6 +4,7 @@ namespace App\Controller\Api;
 
 use App\Entity\User;
 use Doctrine\ORM\EntityManagerInterface;
+use Psr\Cache\CacheItemPoolInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Bundle\SecurityBundle\Security;
 use Symfony\Component\HttpFoundation\JsonResponse;
@@ -21,11 +22,9 @@ class RouletteController extends AbstractController
         private Security $security
     ) {}
 
-    /**
-     * Entry point for the roulette spin logic.
-     */
+
     #[Route('/spin', name: 'spin', methods: ['POST'])]
-    public function spin(Request $request): JsonResponse
+    public function spin(Request $request,CacheItemPoolInterface $cache): JsonResponse
     {
         $user = $this->security->getUser();
         $data = json_decode($request->getContent(), true);
@@ -34,12 +33,22 @@ class RouletteController extends AbstractController
             return $this->json(['error' => 'Invalid request or insufficient funds'], 400);
         }
 
+            $cacheKey = 'spin_cooldown_' . md5($user->getUserIdentifier());
+            $cacheItem = $cache->getItem($cacheKey);
+
+            if ($cacheItem->isHit()) {
+                return $this->json(['error' => 'Please wait 3 seconds before spinning again.'], 429);
+            }
+
+            $cacheItem->set(true);
+            $cacheItem->expiresAfter(3);
+            $cache->save($cacheItem);
+
+
         return $this->processSpin($user, (int)$data['betNumber']);
     }
 
-    /**
-     * Orchestrates the spin result and user update.
-     */
+
     private function processSpin(User $user, int $betNumber): JsonResponse
     {
         $winningNumber = random_int(0, self::MAX_ROULETTE_NUMBER);
@@ -64,7 +73,7 @@ class RouletteController extends AbstractController
     private function isValidRequest(?array $data, User $user): bool
     {
         $hasRequiredFields = isset($data['betNumber']);
-        
+
         if (!$hasRequiredFields) {
             return false;
         }
