@@ -1,13 +1,14 @@
 import { BrowserRouter, Routes, Route } from "react-router-dom";
-import { Layout } from "./Layout";
-import { HomePage } from "./pages/HomePage";
-import { ThemeProvider } from "./lib/theme-provider";
-import { AuthProvider } from "./lib/auth";
-import { LoginPage } from "./pages/LoginPage";
-import { AccountPage } from "./pages/AccountPage";
-import { RegisterPage } from "./pages/RegisterPage";
-import { NotFoundPage } from "./pages/NotFoundPage";
-import { TurtlettePage } from "./pages/TurtlettePage";
+import { Layout } from "@/Layout";
+import { HomePage } from "@/pages/HomePage";
+import { ThemeProvider } from "@/lib/theme-provider";
+import { AuthProvider } from "@/lib/auth";
+import { LoginPage } from "@/pages/LoginPage";
+import { AccountPage } from "@/pages/AccountPage";
+import { RegisterPage } from "@/pages/RegisterPage";
+import { NotFoundPage } from "@/pages/NotFoundPage";
+import { TurtlettePage } from "@/pages/TurtlettePage";
+import { LeaderboardPage } from "@/pages/LeaderboardPage";
 
 function App() {
   return (
@@ -21,6 +22,7 @@ function App() {
               <Route path="register" element={<RegisterPage />} />
               <Route path="turtlette" element={<TurtlettePage />} />
               <Route path="account" element={<AccountPage/>} />
+              <Route path="leaderboards" element={<LeaderboardPage/>} />
               <Route path="*" element={<NotFoundPage/>} />
             </Route>
           </Routes>
