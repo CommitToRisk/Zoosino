@@ -111,7 +111,7 @@ export function TurtletteWheel({
             }}
           />
           
-          <span className="relative z-10 w-16 h-16 sm:w-20 sm:h-20 flex items-center justify-center bg-background text-text-main text-2xl sm:text-4xl font-black rounded-full shadow-[inset_0_3px_10px_rgba(0,0,0,0.2)] border-4 border-secondary/50">
+          <span className="relative z-10 w-16 h-16 sm:w-20 sm:h-20 flex items-center justify-center bg-background text-text-main text-2xl sm:text-4xl font-black rounded-full border-4 border-secondary">
             {centerDisplay}
           </span>
 

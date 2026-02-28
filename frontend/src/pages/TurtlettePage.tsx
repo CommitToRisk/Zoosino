@@ -21,7 +21,7 @@ export function TurtlettePage() {
   const [rotationDeg, setRotationDeg] = useState(0);
   const [notification, setNotification] = useState<{
     text: string;
-    type: "win" | "lose";
+    type: "win" | "info";
   } | null>(null);
 
   const handleSpin = async () => {
@@ -58,7 +58,7 @@ export function TurtlettePage() {
         } else {
           setNotification({
             text: `Turtle picked ${data.winningNumber}. You got 1 consolation point.`,
-            type: "lose",
+            type: "info",
           });
         }
 
