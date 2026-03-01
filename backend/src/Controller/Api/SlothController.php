@@ -29,8 +29,6 @@ class SlothController extends AbstractController
             return $this->json(['error' => 'Invalid request'], 400);
         }
 
-        $betAmount = (int)$data['betAmount'];
-
         if ($user->getScore() < $betAmount) {
             return $this->json(['error' => 'Insufficient funds'], 400);
         }
