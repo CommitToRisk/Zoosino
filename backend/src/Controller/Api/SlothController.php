@@ -41,7 +41,7 @@ class SlothController extends AbstractController
         $cache->save($cacheItem);
 
 
-        return $this->processSpin($user, $betAmount);
+        return $this->processSpin($user);
     }
 
     private function processSpin(User $user): JsonResponse
