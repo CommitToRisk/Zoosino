@@ -24,8 +24,9 @@ class UserController extends AbstractController
         }
 
         return $this->json([
+            'isGuest' => $user->isGuest(),
             'username' => $user->getUserIdentifier(),
-            'score' => $user->getScore()
+            'balance' => $user->getScore()
         ], 200);
     }
 
@@ -64,8 +65,9 @@ class UserController extends AbstractController
 
         return $this->json([
             'message' => 'Uživatel registrován a přihlášen!',
+            'isGuest' => False,
             'username' => $user->getUserIdentifier(),
-            'score' => $user->getScore()
+            'balance' => $user->getScore()
         ], 200);
     }
 
@@ -94,7 +96,7 @@ class UserController extends AbstractController
         return $this->json([
             'message' => 'Úspěšně přihlášeno!',
             'username' => $user->getUserIdentifier(),
-            'score' => $user->getScore()
+            'balance' => $user->getScore()
         ], 200);
     }
 
@@ -133,7 +135,7 @@ class UserController extends AbstractController
             'message' => 'Přihlášen jako host!',
             'isGuest' => true,
             'username' => $guest->getUserIdentifier(),
-            'score' => $guest->getScore()
+            'balance' => $guest->getScore()
         ], 200);
     }
 
@@ -143,7 +145,7 @@ class UserController extends AbstractController
             Security $security
         ): JsonResponse
         {
-            $users = $entityManager->getRepository(User::class)->findBy([], ['score' => 'DESC']);
+            $users = $entityManager->getRepository(User::class)->findBy([], ['balance' => 'DESC']);
 
             $leaderboard = [];
             $myPosition = null;

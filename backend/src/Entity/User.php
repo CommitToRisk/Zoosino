@@ -34,6 +34,9 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     #[ORM\Column]
     private ?int $score = null;
 
+    #[ORM\Column]
+    private ?bool $isGuest = null;
+
     public function getId(): ?int
     {
         return $this->id;
@@ -123,6 +126,18 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     public function setScore(int $score): static
     {
         $this->score = $score;
+
+        return $this;
+    }
+
+    public function isGuest(): ?bool
+    {
+        return $this->isGuest;
+    }
+
+    public function setIsGuest(bool $isGuest): static
+    {
+        $this->isGuest = $isGuest;
 
         return $this;
     }
