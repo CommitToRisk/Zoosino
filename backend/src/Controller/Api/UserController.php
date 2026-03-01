@@ -24,7 +24,7 @@ class UserController extends AbstractController
         }
 
         return $this->json([
-            'isGuest' => $user->isGuest(),
+            'isGuest' => $user->getIsGuest(),
             'username' => $user->getUserIdentifier(),
             'balance' => $user->getScore()
         ], 200);
@@ -130,7 +130,7 @@ class UserController extends AbstractController
 
         $entityManager->persist($guest);
         $entityManager->flush();
-        $user->setIisGuest(True);
+        $user->setIsGuest(True);
         $security->login($guest);
 
         return $this->json([
