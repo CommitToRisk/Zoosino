@@ -9,6 +9,7 @@ import { RegisterPage } from "@/pages/RegisterPage";
 import { NotFoundPage } from "@/pages/NotFoundPage";
 import { TurtlettePage } from "@/pages/TurtlettePage";
 import { LeaderboardPage } from "@/pages/LeaderboardPage";
+import { SlothPage } from "./pages/SlothPage";
 
 function App() {
   return (
@@ -21,6 +22,7 @@ function App() {
               <Route path="login" element={<LoginPage />} />
               <Route path="register" element={<RegisterPage />} />
               <Route path="turtlette" element={<TurtlettePage />} />
+              <Route path="sloth" element={<SlothPage />} />
               <Route path="account" element={<AccountPage/>} />
               <Route path="leaderboards" element={<LeaderboardPage/>} />
               <Route path="*" element={<NotFoundPage/>} />
