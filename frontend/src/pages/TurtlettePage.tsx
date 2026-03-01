@@ -6,6 +6,8 @@ import { TurtletteWheel } from "@/components/games/turtlette/TurtletteWheel";
 import { TurtletteBoard } from "@/components/games/turtlette/TurtletteBoard";
 import { GameNotification } from "@/components/games/GameNotification";
 import { ROULETTE_ORDER } from "@/components/games/turtlette/TurtletteWheel";
+import { GameButton } from "@/components/games/GameButton";
+import { GameHeader } from "@/components/games/GameHeader";
 
 
 export function TurtlettePage() {
@@ -85,36 +87,43 @@ export function TurtlettePage() {
         onClose={closeNotification}
       />
 
-      <div className="flex flex-col lg:flex-row items-center justify-center gap-6 lg:gap-12 w-full max-w-5xl mx-auto py-6">
-        <div className="flex flex-col items-center justify-center flex-1 shrink-0 w-full lg:w-1/2">
-          <h1 className="text-2xl sm:text-3xl lg:text-4xl font-bold text-primary mb-6 uppercase tracking-wider text-center">
-            Turtlette
-          </h1>
-          <TurtletteWheel
-            rotationDeg={rotationDeg}
-            isZoomed={isZoomed}
-            isSpinning={isSpinning}
-            winningNumber={winningNumber}
-            spinDurationMs={4000}
-            turtlePopOutMs={3500}
-          />
+      <div className="flex flex-col items-center justify-center w-full max-w-5xl mx-auto py-8 px-4 gap-8">
+        
+        <GameHeader 
+          title="TURTLETTE" 
+          subtitle="Pick a lucky number and spin the turtle's wheel!" 
+        />
+
+        <div className="flex flex-col lg:flex-row items-center justify-center gap-6 lg:gap-12 w-full">
+          
+          <div className="flex flex-col items-center justify-center flex-1 shrink-0 w-full lg:w-1/2">
+            <TurtletteWheel
+              rotationDeg={rotationDeg}
+              isZoomed={isZoomed}
+              isSpinning={isSpinning}
+              winningNumber={winningNumber}
+              spinDurationMs={4000}
+              turtlePopOutMs={3500}
+            />
+          </div>
+
+          <div className="flex flex-col items-center justify-center flex-1 shrink-0 w-full lg:w-1/2 z-10">
+            <TurtletteBoard
+              selectedNumber={selectedNumber}
+              onSelect={setSelectedNumber}
+              disabled={isSpinning || isZoomed}
+            />
+          </div>
+          
         </div>
 
-        <div className="flex flex-col items-center justify-center flex-1 shrink-0 w-full lg:w-1/2 z-10">
-          <TurtletteBoard
-            selectedNumber={selectedNumber}
-            onSelect={setSelectedNumber}
-            disabled={isSpinning || isZoomed}
-          />
+        <GameButton
+          onClick={handleSpin}
+          disabled={isSpinning || selectedNumber === null || isZoomed}
+        >
+          {isSpinning ? "Running..." : "SPIN NOW"}
+        </GameButton>
 
-          <button
-            onClick={handleSpin}
-            disabled={isSpinning || selectedNumber === null || isZoomed}
-            className="mt-4 lg:mt-6 bg-primary hover:bg-primary-hover text-background text-xl sm:text-2xl font-black uppercase tracking-widest py-3 sm:py-4 w-full max-w-lg rounded shadow-lg transition-transform transform active:scale-95 disabled:opacity-50 disabled:cursor-not-allowed disabled:transform-none"
-          >
-            {isSpinning ? "Running..." : "SPIN NOW"}
-          </button>
-        </div>
       </div>
     </>
   );

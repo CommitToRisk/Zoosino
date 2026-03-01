@@ -4,6 +4,8 @@ import { usePageTitle } from "@/hooks/usePageTitle";
 import { useAuth } from "@/lib/auth";
 import { SlothMachine } from "@/components/games/sloth/SlothMachine";
 import { GameNotification } from "@/components/games/GameNotification";
+import { GameHeader } from "@/components/games/GameHeader";
+import { GameButton } from "@/components/games/GameButton";
 
 export function SlothPage() {
   usePageTitle("Sloth");
@@ -51,7 +53,7 @@ export function SlothPage() {
           
           setIsLocked(false);
 
-        }, 1000);
+        }, 800);
 
       }, 1000);
 
@@ -77,28 +79,21 @@ export function SlothPage() {
 
       <div className="flex flex-col items-center justify-center w-full max-w-4xl mx-auto py-8 px-4 gap-8">
         
-        <div className="text-center">
-          <h1 className="text-2xl sm:text-3xl lg:text-4xl font-bold text-primary mb-6 uppercase tracking-wider text-center">
-            SLOTH
-          </h1>
-          <p className="text-text-muted font-medium">
-            Matching 3 fruits wins <strong className="text-primary">100,000 pts</strong>.
-          </p>
-        </div>
-
+        <GameHeader 
+          title="SLOTH" 
+          subtitle={
+            <>
+              Matching 3 fruits wins <strong className="text-primary">100,000 pts</strong>.
+            </>
+          } 
+        />
         <SlothMachine fruits={fruits} isSpinning={isSpinning} />
-
-        <button
-          onClick={handlePlay}
+        <GameButton 
+          onClick={handlePlay} 
           disabled={isLocked}
-          className={`mt-4 px-12 py-4 rounded-xl font-black text-xl uppercase tracking-widest transition-transform transform ${
-            isLocked
-              ? "bg-secondary text-text-muted opacity-50 cursor-not-allowed"
-              : "bg-primary text-background hover:bg-primary-hover active:scale-95 shadow-lg"
-          }`}
         >
           {isLocked ? "Dropping..." : "Drop Fruits"}
-        </button>
+        </GameButton>
         
       </div>
     </>
