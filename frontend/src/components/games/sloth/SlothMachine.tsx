@@ -1,15 +1,16 @@
 import treeUpperImg from "@/assets/sloth/tree_upper.svg";
 import treeBottomImg from "@/assets/sloth/tree_bottom.svg";
 import slothImg from "@/assets/sloth/sloth.png"; 
+import cherryImg from "@/assets/sloth/fruits/cherry.svg";
 
-const FRUIT_COLORS = [
-  "bg-red-500",
-  "bg-yellow-400",
-  "bg-green-500",
-  "bg-orange-500",
-  "bg-purple-500",
-  "bg-pink-400",
-  "bg-blue-400"
+const FRUIT_IMAGES = [
+  cherryImg,
+  cherryImg,// apple
+  cherryImg,// orage
+  cherryImg,// coconut
+  cherryImg,// mango
+  cherryImg,// banana
+  cherryImg// plum
 ];
 
 type SlothMachineProps = {
@@ -38,20 +39,29 @@ export function SlothMachine({ fruits, isSpinning }: SlothMachineProps) {
       <div className="absolute z-20 top-[35%] sm:top-[40%] flex justify-center gap-3 sm:gap-4 w-full">
         {displayFruits.map((fruitId, index) => {
           const isHidden = fruitId === -1;
-          const colorClass = isHidden ? "bg-transparent border-transparent shadow-none" : FRUIT_COLORS[fruitId];
+          const imageSrc = !isHidden ? FRUIT_IMAGES[fruitId] : null;
 
           return (
             <div 
               key={index}
-              className={`w-16 h-16 sm:w-20 sm:h-20 rounded-2xl border-4 ${isHidden ? '' : 'border-black/10 shadow-lg'} transition-all duration-700 ease-bounce ${colorClass} ${
+              className={`relative flex items-center justify-center w-16 h-16 sm:w-20 sm:h-20 rounded-2xl bg-transparent transition-all duration-700 ease-bounce ${
                 isSpinning 
-                  ? "-translate-y-20 opacity-0" 
-                  : "translate-y-12 sm:translate-y-16 opacity-100"
+                  ? "-translate-y-20 opacity-0 rotate-30"
+                  : "translate-y-12 sm:translate-y-16 opacity-100 rotate-0"
               }`}
               style={{
-                transitionDelay: isSpinning ? '0ms' : `${index * 150}ms`
+                transitionDelay: isSpinning ? '0ms' : `${index * 150}ms`,
+                transformOrigin: 'center'
               }}
-            />
+            >
+              {imageSrc && (
+                <img 
+                  src={imageSrc} 
+                  alt="Fruit" 
+                  className="w-full h-full object-contain drop-shadow-md" 
+                />
+              )}
+            </div>
           );
         })}
       </div>
