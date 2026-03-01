@@ -58,6 +58,8 @@ class UserController extends AbstractController
         $score = $data['score'] ?? 0;
         $user->setScore($score);
 
+        $user->isGuest(False);
+
         $entityManager->persist($user);
         $entityManager->flush();
 
@@ -128,7 +130,7 @@ class UserController extends AbstractController
 
         $entityManager->persist($guest);
         $entityManager->flush();
-
+        $user->isGuest(True);
         $security->login($guest);
 
         return $this->json([
