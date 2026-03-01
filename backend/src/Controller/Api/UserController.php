@@ -128,9 +128,10 @@ class UserController extends AbstractController
 
         $guest->setScore(0);
 
+        $guest->setIsGuest(true);
+
         $entityManager->persist($guest);
         $entityManager->flush();
-        $user->setIsGuest(True);
         $security->login($guest);
 
         return $this->json([
