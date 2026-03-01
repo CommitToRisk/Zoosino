@@ -24,7 +24,7 @@ class UserController extends AbstractController
         }
 
         return $this->json([
-            'isGuest' => $user->getIsGuest(),
+            'isGuest' => $user->IsGuest(),
             'username' => $user->getUserIdentifier(),
             'balance' => $user->getScore()
         ], 200);
