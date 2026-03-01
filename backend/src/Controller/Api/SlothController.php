@@ -29,10 +29,6 @@ class SlothController extends AbstractController
             return $this->json(['error' => 'Invalid request'], 400);
         }
 
-        if ($user->getScore() < $betAmount) {
-            return $this->json(['error' => 'Insufficient funds'], 400);
-        }
-
         $cacheKey = 'sloth_cooldown_' . md5($user->getUserIdentifier());
         $cacheItem = $cache->getItem($cacheKey);
 
@@ -48,7 +44,7 @@ class SlothController extends AbstractController
         return $this->processSpin($user, $betAmount);
     }
 
-    private function processSpin(User $user, int $betAmount): JsonResponse
+    private function processSpin(User $user): JsonResponse
     {
         $fruit1 = random_int(0,6);
         $fruit2 = random_int(0,6);
