@@ -2,12 +2,15 @@ import treeUpperImg from "@/assets/sloth/tree_upper.svg";
 import treeBottomImg from "@/assets/sloth/tree_bottom.svg";
 import slothImg from "@/assets/sloth/sloth.png"; 
 import cherryImg from "@/assets/sloth/fruits/cherry.svg";
+import appleImge from "@/assets/sloth/fruits/apple.svg";
+import orangeImg from "@/assets/sloth/fruits/orange.svg";
+import coconutImg from "@/assets/sloth/fruits/coconut.svg";
 
 const FRUIT_IMAGES = [
   cherryImg,
-  cherryImg,// apple
-  cherryImg,// orage
-  cherryImg,// coconut
+  appleImge,// apple
+  orangeImg,// orage
+  coconutImg,// coconut
   cherryImg,// mango
   cherryImg,// banana
   cherryImg// plum
@@ -19,7 +22,7 @@ type SlothMachineProps = {
 };
 
 export function SlothMachine({ fruits, isSpinning }: SlothMachineProps) {
-  const displayFruits = fruits || [-1, -1, -1];
+  const displayFruits = fruits || [1, 2, 3];
 
   return (
     <div className="relative flex flex-col items-center w-full max-w-[320px] sm:max-w-100 mx-auto mt-16">
