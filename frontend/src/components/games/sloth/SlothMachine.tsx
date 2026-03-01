@@ -1,5 +1,6 @@
 import treeUpperImg from "@/assets/sloth/tree_upper.svg";
 import treeBottomImg from "@/assets/sloth/tree_bottom.svg";
+import slothImg from "@/assets/sloth/sloth.png"; 
 
 const FRUIT_COLORS = [
   "bg-red-500",
@@ -20,8 +21,14 @@ export function SlothMachine({ fruits, isSpinning }: SlothMachineProps) {
   const displayFruits = fruits || [-1, -1, -1];
 
   return (
-    <div className="relative flex flex-col items-center w-full max-w-[320px] sm:max-w-100 mx-auto mt-8">
+    <div className="relative flex flex-col items-center w-full max-w-[320px] sm:max-w-100 mx-auto mt-16">
       
+      <img 
+        src={slothImg} 
+        alt="Sleeping Sloth" 
+        className="absolute z-40 -top-8 sm:-top-10 w-32 sm:w-40 drop-shadow-sm pointer-events-none" 
+      />
+
       <img 
         src={treeUpperImg} 
         alt="Tree Upper" 
