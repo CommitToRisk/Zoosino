@@ -192,6 +192,7 @@ class PengjackController extends AbstractController
         $cache->deleteItem($cacheKey);
 
         return $this->json([
+            'status' => $status,
             'playerCards' => $gameState['playerCards'],
             'dealerCards' => $dealerCards,
             'winAmount' => $winAmount,
