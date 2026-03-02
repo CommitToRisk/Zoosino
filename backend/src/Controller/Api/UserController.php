@@ -148,7 +148,7 @@ class UserController extends AbstractController
             Security $security
         ): JsonResponse
         {
-            $users = $entityManager->getRepository(User::class)->findBy([], ['balance' => 'DESC']);
+            $users = $entityManager->getRepository(User::class)->findBy([], ['score' => 'DESC']);
 
             $leaderboard = [];
             $myPosition = null;
