@@ -199,4 +199,34 @@ class PengjackController extends AbstractController
             'newBalance' => $user->getScore()
         ]);
     }
+
+    #[Route('/state', name: 'state', methods: ['GET'])]
+        public function state(CacheItemPoolInterface $cache): JsonResponse
+        {
+            $user = $this->security->getUser();
+            if (!$user instanceof User) {
+                return $this->json(['error' => 'Unauthorized'], 401);
+            }
+
+            $cacheKey = 'pengjack_game_' . md5($user->getUserIdentifier());
+            $cacheItem = $cache->getItem($cacheKey);
+
+            if (!$cacheItem->isHit()) {
+                return $this->json([
+                    'status' => 'none',
+                    'message' => 'Žádná aktivní hra'
+                ], 200);
+            }
+
+            $gameState = $cacheItem->get();
+
+            return $this->json([
+                'status' => 'playing',
+                'playerCards' => $gameState['playerCards'],
+                'dealerCards' => [$gameState['dealerCards'][0], '?'],
+                'winAmount' => 0,
+                'newBalance' => $user->getScore()
+            ], 200);
+        }
+
 }
