@@ -51,17 +51,15 @@ class SlothController extends AbstractController
         $fruit3 = random_int(0,6);
 
         $fruits = [$fruit1, $fruit2, $fruit3];
-        $winAmount = 0;
+        $winAmount = 1;
 
 
         if ($fruit1 === $fruit2 && $fruit2 === $fruit3) {
             $winAmount = 100000;
-
         }
 
-        if ($winAmount > 0) {
-            $user->setScore($user->getScore() + $winAmount);
-        }
+        $user->setScore($user->getScore() + $winAmount);
+
 
         $this->entityManager->persist($user);
         $this->entityManager->flush();
