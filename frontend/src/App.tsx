@@ -10,6 +10,7 @@ import { NotFoundPage } from "@/pages/NotFoundPage";
 import { TurtlettePage } from "@/pages/TurtlettePage";
 import { LeaderboardPage } from "@/pages/LeaderboardPage";
 import { SlothPage } from "./pages/SlothPage";
+import { PengjackPage } from "./pages/PengjackPage";
 
 function App() {
   return (
@@ -22,6 +23,7 @@ function App() {
               <Route path="login" element={<LoginPage />} />
               <Route path="register" element={<RegisterPage />} />
               <Route path="turtlette" element={<TurtlettePage />} />
+              <Route path="pengjack" element={<PengjackPage />} />
               <Route path="sloth" element={<SlothPage />} />
               <Route path="account" element={<AccountPage/>} />
               <Route path="leaderboards" element={<LeaderboardPage/>} />
