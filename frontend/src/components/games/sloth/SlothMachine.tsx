@@ -5,14 +5,17 @@ import cherryImg from "@/assets/sloth/fruits/cherry.svg";
 import appleImge from "@/assets/sloth/fruits/apple.svg";
 import orangeImg from "@/assets/sloth/fruits/orange.svg";
 import coconutImg from "@/assets/sloth/fruits/coconut.svg";
+import mangoImg from "@/assets/sloth/fruits/mango.svg";
+import bananaImg from "@/assets/sloth/fruits/banana.svg";
+// import plumImg from "@/assets/sloth/fruits/plum.svg";
 
 const FRUIT_IMAGES = [
   cherryImg,
   appleImge,// apple
   orangeImg,// orage
   coconutImg,// coconut
-  cherryImg,// mango
-  cherryImg,// banana
+  mangoImg,// mango
+  bananaImg,// banana
   cherryImg// plum
 ];
 
