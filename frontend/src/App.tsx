@@ -11,8 +11,15 @@ import { TurtlettePage } from "@/pages/TurtlettePage";
 import { LeaderboardPage } from "@/pages/LeaderboardPage";
 import { SlothPage } from "./pages/SlothPage";
 import { PengjackPage } from "./pages/PengjackPage";
+import { initTracking } from "./lib/tracking";
+import { useEffect } from "react";
 
 function App() {
+
+  useEffect(() => {
+    initTracking();
+  }, []);
+
   return (
     <ThemeProvider defaultTheme="system" storageKey="zoosino-ui-theme">
       <AuthProvider>
