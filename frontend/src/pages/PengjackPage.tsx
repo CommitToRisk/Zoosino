@@ -47,11 +47,11 @@ export function PengjackPage() {
     if (gameState.status === "playing" || gameState.status === "idle") return;
 
     if (gameState.status === "won" || gameState.status === "blackjack") {
-      setNotification({ text: `YOU WON 5,000 PTS! (${gameState.status.toUpperCase()})`, type: "win" });
+      setNotification({ text: "🎉 WINNER! You won 5,000 Points! ", type: "win" });
     } else if (gameState.status === "push") {
-      setNotification({ text: "PUSH! IT'S A TIE.", type: "info" });
+      setNotification({ text: "Its a tie. You got 1 consolation point.", type: "info" });
     } else {
-      setNotification({ text: `YOU LOST! (${gameState.status.toUpperCase()})`, type: "lose" });
+      setNotification({ text: "You lost. You got 1 consolation point", type: "info" });
     }
   }, [gameState.status]);
 
@@ -166,7 +166,7 @@ export function PengjackPage() {
               <button 
                 onClick={handleHit} 
                 disabled={isLoading} 
-                className="w-32 py-3 bg-primary text-text-secondary font-black text-xl rounded-xl shadow-lg hover:bg-primary-hover active:scale-95 transition-transform disabled:opacity-50"
+                className="w-32 py-3 bg-primary text-text-main font-black text-xl rounded-xl shadow-lg hover:bg-primary-hover active:scale-95 transition-transform disabled:opacity-50"
               >
                 HIT
               </button>
