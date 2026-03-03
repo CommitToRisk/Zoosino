@@ -27,13 +27,12 @@ export function PengjackHand({ title, cards }: PengjackHandProps) {
   };
 
   return (
-    <div className="flex items-center justify-between w-full max-w-65 sm:max-w-90 relative z-10">
-      
+    <div className="flex items-center justify-between w-full max-w-50 sm:max-w-90 relative z-10 gap-2">
       <div className="flex">
         {cards.map((card, idx) => (
-          <div 
-            key={`${title}-${idx}`} 
-            className={`relative ${idx > 0 ? "-ml-10 sm:-ml-12" : ""}`}
+          <div
+            key={`${title}-${idx}`}
+            className={`relative ${idx > 0 ? "-ml-8 sm:-ml-12" : ""}`}
             style={{ zIndex: idx }}
           >
             <PengjackCard value={card} index={idx} />
@@ -41,15 +40,14 @@ export function PengjackHand({ title, cards }: PengjackHandProps) {
         ))}
       </div>
 
-      <div className="flex flex-col items-center gap-2 shrink-0">
-        <div className="w-16 h-16 sm:w-20 sm:h-20 rounded-full bg-background border-2 border-border text-text-main flex items-center justify-center font-black text-2xl sm:text-3xl shadow-md">
+      <div className="flex flex-col items-center gap-1 sm:gap-2 shrink-0">
+        <div className="w-12 h-12 sm:w-20 sm:h-20 rounded-full bg-background border-2 border-border  text-text-main flex items-center justify-center font-black text-xl sm:text-3xl shadow-md">
           {calculateScore()}
         </div>
-        <span className="text-text-main text-sm sm:text-base font-bold tracking-widest uppercase">
+        <span className="text-text-main text-[10px] sm:text-base font-bold tracking-widest uppercase">
           {title}
         </span>
       </div>
-      
     </div>
   );
 }

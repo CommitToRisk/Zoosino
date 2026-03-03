@@ -5,6 +5,8 @@ import { PengjackHand } from "@/components/games/pengjack/PengjackHand";
 import { GameNotification } from "@/components/games/GameNotification";
 import api from "@/lib/api";
 import { useAuth } from "@/lib/auth";
+import penguinImg from "@/assets/pengjack/penguin.svg";
+import tableImg from "@/assets/pengjack/table.svg";
 
 type GameState = {
   status: "idle" | "playing" | "won" | "lost" | "bust" | "push" | "blackjack";
@@ -121,61 +123,64 @@ export function PengjackPage() {
         onClose={closeNotification}
       />
 
-      <div className="flex flex-col items-center justify-center w-full max-w-5xl mx-auto py-8 px-4 gap-8">
+      <div className="flex flex-col items-center justify-center w-full max-w-5xl mx-auto gap-3">
         <GameHeader 
           title="PENGJACK" 
           subtitle="Beat the penguin dealer to win 5,000 pts!" 
         />
 
-        <div className="w-full max-w-3xl bg-[#2a6645] p-8 sm:p-16 rounded-xl shadow-[inset_0_0_50px_rgba(0,0,0,0.5)] flex flex-col items-center justify-between min-h-125 relative border-8 border-[#1c412e]">
-          
-          <div className="relative w-full flex justify-center mt-4">
-            <div className="absolute -top-16 sm:-top-24 w-40 h-40 sm:w-48 sm:h-48 z-0 opacity-80 pointer-events-none">
-               <div className="w-full h-full bg-slate-800 flex items-center justify-center">
-                 <span className="text-5xl"> PENGUIN PIC HERE </span>
-               </div>
-            </div>
+        <div className="relative flex flex-col items-center justify-center w-full max-w-3xl">
 
-            {gameState.dealerCards.length > 0 && (
-              <PengjackHand title="Dealer" cards={gameState.dealerCards} />
-            )}
-          </div>
+          <img 
+            src={penguinImg}
+            alt="Penguin Dealer" 
+            className="w-40 h-40 sm:w-48 sm:h-48 z-10 pointer-events-none mt-4 sm:mt-6 mb-4 sm:mb-6 block"
+          />
 
-          <div className="flex-1 w-full min-h-20 sm:min-h-30"></div>
+          <div className="relative flex items-center justify-center w-full">
+            <img 
+              src={tableImg}
+              alt="Table"
+              className="w-[95%] sm:w-[80%] z-0 pointer-events-none block"
+            />
 
-          <div className="w-full flex flex-col items-center gap-8">
-            
-            {gameState.playerCards.length > 0 && (
-              <PengjackHand title="Player" cards={gameState.playerCards} />
-            )}
+            <div className="absolute inset-0 z-20 flex flex-col items-center justify-center gap-3 sm:gap-6">
+              {gameState.dealerCards.length > 0 && (
+                <PengjackHand title="Dealer" cards={gameState.dealerCards} />
+              )}
 
-            <div className="flex flex-col items-center gap-4 sm:flex-row sm:justify-center sm:gap-16 mt-4 z-20 relative min-h-20 sm:h-20">
-              {gameState.status === "idle" || gameState.status !== "playing" ? (
-                <GameButton onClick={handleStart} disabled={isLoading} className="w-64!">
-                  {gameState.status === "idle" ? "DEAL CARDS" : "PLAY AGAIN"}
-                </GameButton>
-              ) : (
-                <>
-                  <button 
-                    onClick={handleHit} 
-                    disabled={isLoading} 
-                    className="w-32 py-3 bg-primary text-text-secondary font-black text-xl rounded-xl shadow-lg hover:bg-primary-hover active:scale-95 transition-transform disabled:opacity-50"
-                  >
-                    HIT
-                  </button>
-                  <button 
-                    onClick={handleStand} 
-                    disabled={isLoading} 
-                    className="w-32 py-3 bg-red-600 text-text-main font-black text-xl rounded-xl shadow-lg hover:bg-red-700 active:scale-95 transition-transform disabled:opacity-50"
-                  >
-                    STAND
-                  </button>
-                </>
+              {gameState.playerCards.length > 0 && (
+                <PengjackHand title="Player" cards={gameState.playerCards} />
               )}
             </div>
-
           </div>
         </div>
+
+        <div className="flex flex-row items-center justify-center gap-4 sm:gap-16 w-full z-20 relative mt-8 sm:mt-12">
+          {gameState.status === "idle" || gameState.status !== "playing" ? (
+            <GameButton onClick={handleStart} disabled={isLoading} className="w-64!">
+              {gameState.status === "idle" ? "DEAL CARDS" : "PLAY AGAIN"}
+            </GameButton>
+          ) : (
+            <>
+              <button 
+                onClick={handleHit} 
+                disabled={isLoading} 
+                className="w-32 py-3 bg-primary text-text-secondary font-black text-xl rounded-xl shadow-lg hover:bg-primary-hover active:scale-95 transition-transform disabled:opacity-50"
+              >
+                HIT
+              </button>
+              <button 
+                onClick={handleStand} 
+                disabled={isLoading} 
+                className="w-32 py-3 bg-red-600 text-text-main font-black text-xl rounded-xl shadow-lg hover:bg-red-700 active:scale-95 transition-transform disabled:opacity-50"
+              >
+                STAND
+              </button>
+            </>
+          )}
+        </div>
+
       </div>
     </>
   );
