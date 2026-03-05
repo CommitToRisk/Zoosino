@@ -4,10 +4,10 @@ namespace App\Controller\Api;
 
 use App\Entity\User;
 use Doctrine\ORM\EntityManagerInterface;
-use Psr\Cache\CacheItemPoolInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Bundle\SecurityBundle\Security;
 use Symfony\Component\HttpFoundation\JsonResponse;
+use Symfony\Component\HttpFoundation\RequestStack;
 use Symfony\Component\Routing\Attribute\Route;
 
 #[Route('/api/pengjack', name: 'api_pengjack_')]
@@ -45,7 +45,7 @@ class PengjackController extends AbstractController
     }
 
     #[Route('/start', name: 'start', methods: ['POST'])]
-    public function start(CacheItemPoolInterface $cache): JsonResponse
+    public function start(RequestStack $requestStack): JsonResponse
     {
         $user = $this->security->getUser();
 
@@ -53,10 +53,9 @@ class PengjackController extends AbstractController
             return $this->json(['error' => 'Invalid request'], 400);
         }
 
-        $cacheKey = 'pengjack_game_' . md5($user->getUserIdentifier());
-        $cacheItem = $cache->getItem($cacheKey);
+        $session = $requestStack->getSession();
 
-        if ($cacheItem->isHit()) {
+        if ($session->has('pengjack_game')) {
             return $this->json(['error' => 'Game in progress'], 400);
         }
 
@@ -85,9 +84,7 @@ class PengjackController extends AbstractController
             'dealerCards' => $dealerCards
         ];
 
-        $cacheItem->set($gameState);
-        $cacheItem->expiresAfter(3600);
-        $cache->save($cacheItem);
+        $session->set('pengjack_game', $gameState);
 
         return $this->json([
             'status' => 'playing',
@@ -99,21 +96,20 @@ class PengjackController extends AbstractController
     }
 
     #[Route('/hit', name: 'hit', methods: ['POST'])]
-    public function hit(CacheItemPoolInterface $cache): JsonResponse
+    public function hit(RequestStack $requestStack): JsonResponse
     {
         $user = $this->security->getUser();
         if (!$user instanceof User) {
             return $this->json(['error' => 'Unauthorized'], 401);
         }
 
-        $cacheKey = 'pengjack_game_' . md5($user->getUserIdentifier());
-        $cacheItem = $cache->getItem($cacheKey);
+        $session = $requestStack->getSession();
 
-        if (!$cacheItem->isHit()) {
+        if (!$session->has('pengjack_game')) {
             return $this->json(['error' => 'No active game'], 400);
         }
 
-        $gameState = $cacheItem->get();
+        $gameState = $session->get('pengjack_game');
         $gameState['playerCards'][] = $this->drawCard();
         $playerScore = $this->calculateScore($gameState['playerCards']);
 
@@ -123,7 +119,7 @@ class PengjackController extends AbstractController
             $this->entityManager->persist($user);
             $this->entityManager->flush();
 
-            $cache->deleteItem($cacheKey);
+            $session->remove('pengjack_game');
 
             return $this->json([
                 'status' => 'bust',
@@ -134,8 +130,7 @@ class PengjackController extends AbstractController
             ]);
         }
 
-        $cacheItem->set($gameState);
-        $cache->save($cacheItem);
+        $session->set('pengjack_game', $gameState);
 
         return $this->json([
             'status' => 'playing',
@@ -147,21 +142,20 @@ class PengjackController extends AbstractController
     }
 
     #[Route('/stand', name: 'stand', methods: ['POST'])]
-    public function stand(CacheItemPoolInterface $cache): JsonResponse
+    public function stand(RequestStack $requestStack): JsonResponse
     {
         $user = $this->security->getUser();
         if (!$user instanceof User) {
             return $this->json(['error' => 'Unauthorized'], 401);
         }
 
-        $cacheKey = 'pengjack_game_' . md5($user->getUserIdentifier());
-        $cacheItem = $cache->getItem($cacheKey);
+        $session = $requestStack->getSession();
 
-        if (!$cacheItem->isHit()) {
+        if (!$session->has('pengjack_game')) {
             return $this->json(['error' => 'No active game'], 400);
         }
 
-        $gameState = $cacheItem->get();
+        $gameState = $session->get('pengjack_game');
         $dealerCards = $gameState['dealerCards'];
 
         $playerScore = $this->calculateScore($gameState['playerCards']);
@@ -189,7 +183,7 @@ class PengjackController extends AbstractController
             $this->entityManager->flush();
         }
 
-        $cache->deleteItem($cacheKey);
+        $session->remove('pengjack_game');
 
         return $this->json([
             'status' => $status,
@@ -201,24 +195,23 @@ class PengjackController extends AbstractController
     }
 
     #[Route('/state', name: 'state', methods: ['GET'])]
-        public function state(CacheItemPoolInterface $cache): JsonResponse
+        public function state(RequestStack $requestStack): JsonResponse
         {
             $user = $this->security->getUser();
             if (!$user instanceof User) {
                 return $this->json(['error' => 'Unauthorized'], 401);
             }
 
-            $cacheKey = 'pengjack_game_' . md5($user->getUserIdentifier());
-            $cacheItem = $cache->getItem($cacheKey);
+            $session = $requestStack->getSession();
 
-            if (!$cacheItem->isHit()) {
+            if (!$session->has('pengjack_game')) {
                 return $this->json([
                     'status' => 'none',
                     'message' => 'Žádná aktivní hra'
                 ], 200);
             }
 
-            $gameState = $cacheItem->get();
+            $gameState = $session->get('pengjack_game');
 
             return $this->json([
                 'status' => 'playing',
@@ -228,5 +221,6 @@ class PengjackController extends AbstractController
                 'newBalance' => $user->getScore()
             ], 200);
         }
+
 
 }
