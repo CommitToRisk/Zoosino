@@ -13,6 +13,7 @@ import { SlothPage } from "./pages/SlothPage";
 import { PengjackPage } from "./pages/PengjackPage";
 import { initTracking } from "./lib/tracking";
 import { useEffect } from "react";
+import { ProtectedRoute } from "./components/ProtectedRoute";
 
 function App() {
 
@@ -25,16 +26,21 @@ function App() {
       <AuthProvider>
         <BrowserRouter>
           <Routes>
-            <Route path="/" element={<Layout />}>
+            <Route element={<Layout />}>
+
               <Route index element={<HomePage />} />
               <Route path="login" element={<LoginPage />} />
               <Route path="register" element={<RegisterPage />} />
-              <Route path="turtlette" element={<TurtlettePage />} />
-              <Route path="pengjack" element={<PengjackPage />} />
-              <Route path="sloth" element={<SlothPage />} />
-              <Route path="account" element={<AccountPage/>} />
-              <Route path="leaderboards" element={<LeaderboardPage/>} />
               <Route path="*" element={<NotFoundPage/>} />
+
+              <Route element={<ProtectedRoute />}>
+                <Route path="turtlette" element={<TurtlettePage />} />
+                <Route path="pengjack" element={<PengjackPage />} />
+                <Route path="sloth" element={<SlothPage />} />
+                <Route path="account" element={<AccountPage/>} />
+                <Route path="leaderboards" element={<LeaderboardPage/>} />
+              </Route>
+              
             </Route>
           </Routes>
         </BrowserRouter>
