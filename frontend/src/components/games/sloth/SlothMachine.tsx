@@ -7,7 +7,7 @@ import orangeImg from "@/assets/sloth/fruits/orange.svg";
 import coconutImg from "@/assets/sloth/fruits/coconut.svg";
 import mangoImg from "@/assets/sloth/fruits/mango.svg";
 import bananaImg from "@/assets/sloth/fruits/banana.svg";
-// import plumImg from "@/assets/sloth/fruits/plum.svg";
+import plumImg from "@/assets/sloth/fruits/plum.svg";
 
 const FRUIT_IMAGES = [
   cherryImg,
@@ -16,7 +16,7 @@ const FRUIT_IMAGES = [
   coconutImg,// coconut
   mangoImg,// mango
   bananaImg,// banana
-  cherryImg// plum
+  plumImg// plum
 ];
 
 type SlothMachineProps = {
