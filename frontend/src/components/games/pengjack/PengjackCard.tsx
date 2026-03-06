@@ -5,7 +5,7 @@ type PengjackCardProps = {
 
 export function PengjackCard({ value, index }: PengjackCardProps) {
   const isHidden = value === "?";
-
+  const cardNumber = value === 11 ? "A" : value
   return (
     <>
       <style>{`
@@ -31,15 +31,15 @@ export function PengjackCard({ value, index }: PengjackCardProps) {
         {!isHidden && (
           <>
             <div className="absolute top-1 left-1 sm:top-1.5 sm:left-1.5 text-[10px] sm:text-xs font-bold leading-none text-text-main/80 select-none">
-              {value}
+              {cardNumber}
             </div>
 
             <div className="text-2xl sm:text-4xl font-black text-text-main opacity-10 select-none">
-              {value}
+              {cardNumber}
             </div>
 
             <div className="absolute bottom-1 right-1 sm:bottom-1.5 sm:right-1.5 text-[10px] sm:text-xs font-bold leading-none text-text-main/80 rotate-180 select-none">
-              {value}
+              {cardNumber}
             </div>
           </>
         )}

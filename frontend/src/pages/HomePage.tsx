@@ -2,6 +2,11 @@ import { useState } from "react";
 import { Link } from "react-router-dom";
 import { useAuth } from "@/lib/auth";
 import { usePageTitle } from "@/hooks/usePageTitle";
+import { GameCard } from "@/components/GameCard";
+
+import slotGame from "@/assets/sloth_game.png";
+import turtletteGame from "@/assets/turtlette_game.png";
+import pengjackGame from "@/assets/pengjack_game.png";
 
 export function HomePage() {
   const { user, isLoading, loginGuest } = useAuth();
@@ -30,14 +35,57 @@ export function HomePage() {
 
   if (user) {
     return (
-      <div className="p-10 text-center max-w-4xl mx-auto">
+      <div className="p-4 sm:p-10 text-center w-full max-w-6xl mx-auto">
         
-        <h1 className="text-4xl font-bold text-text-main mb-4">
-          {user.isGuest ? "Welcome" : "Welcome back"} <span className="text-primary">{user.username}</span>!
-        </h1>
-        <p className="text-text-muted mb-8">Ready to try your luck today?</p>
-        
-        <p>Under construction</p>
+        <div className="mb-16">
+          <h1 className="text-4xl sm:text-5xl font-black text-text-main mb-4 tracking-tight">
+            {user.isGuest ? "Welcome" : "Welcome back"}, <span className="text-primary">{user.username}</span>!
+          </h1>
+          <p className="text-text-muted text-lg mb-8">Ready to try your luck today?</p>
+        </div>
+
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 sm:gap-8 mb-16">
+          
+          <GameCard 
+            title="Sloth"
+            description="Let the sloth drop fruit and win big!"
+            imgSrc={slotGame}
+            linkTo="/sloth"
+          />
+          
+          <GameCard 
+            title="Turtlette"
+            description="Spin the turtlette and watch your fortune grow!"
+            imgSrc={turtletteGame}
+            linkTo="/turtlette"
+          />
+
+          <GameCard 
+            title="PengJack"
+            description="Beat the penguin dealer to win a prize!"
+            imgSrc={pengjackGame}
+            linkTo="/pengjack"
+          />
+
+        </div>
+
+        <div className="bg-secondary/40 border-2 border-border/50 rounded-2xl p-6 sm:p-10 max-w-4xl mx-auto flex flex-col sm:flex-row items-center justify-between gap-8 text-center sm:text-left">
+          <div>
+            <h3 className="text-xl sm:text-xl font-black text-text-main mb-3 uppercase">
+              Become #1
+            </h3>
+            <p className="text-text-muted">
+              Climb up the leaderboard by playing games.
+            </p>
+          </div>
+          <Link 
+            to="/leaderboards" 
+            className="shrink-0 px-8 py-4 bg-transparent border-2 border-primary text-primary font-black text-md rounded-xl hover:bg-primary/50 hover:text-white transition-colors uppercase tracking-widest whitespace-nowrap"
+          >
+            View Ranking
+          </Link>
+        </div>
+
       </div>
     );
   }
