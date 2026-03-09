@@ -1,6 +1,10 @@
 import api from "@/lib/api";
 
 export const initTracking = async () => {
+  if (sessionStorage.getItem("utm_tracked")) {
+    return;
+  }
+
   const queryParams = new URLSearchParams(window.location.search);
   const utmSource = queryParams.get("utm_source");
   const utmMedium = queryParams.get("utm_medium");
