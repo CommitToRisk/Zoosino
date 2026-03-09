@@ -1,10 +1,6 @@
 import api from "@/lib/api";
 
 export const initTracking = async () => {
-  if (sessionStorage.getItem("utm_tracked")) {
-    return;
-  }
-
   const queryParams = new URLSearchParams(window.location.search);
   const utmSource = queryParams.get("utm_source");
   const utmMedium = queryParams.get("utm_medium");
@@ -22,7 +18,7 @@ export const initTracking = async () => {
     });
 
     sessionStorage.setItem("utm_tracked", "true");
-    // console.log("Tracked from campaign:", utmCampaign);
+    //console.log("Tracked from campaign:", utmCampaign);
   } catch (error) {
     console.error("Error while sending UTM tracking:", error);
   }
