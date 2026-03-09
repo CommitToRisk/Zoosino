@@ -31,7 +31,7 @@ class TrackingController extends AbstractController
             $visit->setUtmSource($source);
             $visit->setUtmMedium($medium);
             $visit->setUtmCampaign($campaign);
-            $visit->setVisitedAt(new \DateTimeImmutable());
+            $visit->setVisited(new \DateTimeImmutable());
 
             $entityManager->persist($visit);
             $entityManager->flush();
