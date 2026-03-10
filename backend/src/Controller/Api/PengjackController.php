@@ -53,6 +53,17 @@ class PengjackController extends AbstractController
             return $this->json(['error' => 'Invalid request'], 400);
         }
 
+        $cacheKey = 'pengjack_cooldown_' . md5($user->getUserIdentifier());
+        $cacheItem = $cache->getItem($cacheKey);
+
+        if ($cacheItem->isHit()) {
+            return $this->json(['error' => 'Please wait before your next move.'], 429);
+        }
+
+        $cacheItem->set(true);
+        $cacheItem->expiresAt(new \DateTimeImmutable('+900 milliseconds'));
+        $cache->save($cacheItem);
+
         $session = $requestStack->getSession();
 
         if ($session->has('pengjack_game')) {
@@ -103,6 +114,17 @@ class PengjackController extends AbstractController
             return $this->json(['error' => 'Unauthorized'], 401);
         }
 
+        $cacheKey = 'pengjack_cooldown_' . md5($user->getUserIdentifier());
+        $cacheItem = $cache->getItem($cacheKey);
+
+        if ($cacheItem->isHit()) {
+            return $this->json(['error' => 'Please wait before your next move.'], 429);
+        }
+
+        $cacheItem->set(true);
+        $cacheItem->expiresAt(new \DateTimeImmutable('+900 milliseconds'));
+        $cache->save($cacheItem);
+
         $session = $requestStack->getSession();
 
         if (!$session->has('pengjack_game')) {
@@ -148,6 +170,17 @@ class PengjackController extends AbstractController
         if (!$user instanceof User) {
             return $this->json(['error' => 'Unauthorized'], 401);
         }
+
+        $cacheKey = 'pengjack_cooldown_' . md5($user->getUserIdentifier());
+        $cacheItem = $cache->getItem($cacheKey);
+
+        if ($cacheItem->isHit()) {
+            return $this->json(['error' => 'Please wait 0.9s before your next move.'], 429);
+        }
+
+        $cacheItem->set(true);
+        $cacheItem->expiresAt(new \DateTimeImmutable('+900 milliseconds'));
+        $cache->save($cacheItem);
 
         $session = $requestStack->getSession();
 

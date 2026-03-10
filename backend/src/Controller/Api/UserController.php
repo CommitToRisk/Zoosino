@@ -150,30 +150,36 @@ class UserController extends AbstractController
         {
             $users = $entityManager->getRepository(User::class)->findBy([], ['score' => 'DESC']);
 
-            $leaderboard = [];
-            $myPosition = null;
+                    $leaderboard = [];
+                    $myPosition = null;
 
-            $currentUser = $security->getUser();
-            $currentUsername = $currentUser ? $currentUser->getUserIdentifier() : null;
+                    $currentUser = $security->getUser();
+                    $currentUsername = $currentUser ? $currentUser->getUserIdentifier() : null;
 
-            $position = 1;
-            foreach ($users as $user) {
-                $leaderboard[] = [
-                    'username' => $user->getUsername(),
-                    'balance' => $user->getScore(),
-                ];
+                    $position = 1;
+                    foreach ($users as $user) {
+                        if ($position <= 100) {
+                            $leaderboard[] = [
+                                'username' => $user->getUsername(),
+                                'balance' => $user->getScore(),
+                            ];
+                        }
 
-                if ($currentUsername && $user->getUsername() === $currentUsername) {
-                    $myPosition = $position;
-                }
+                        if ($currentUsername && $user->getUsername() === $currentUsername) {
+                            $myPosition = $position;
+                        }
 
-                $position++;
-            }
+                        if ($position >= 100 && ($myPosition !== null || !$currentUsername)) {
+                            break;
+                        }
 
-            return $this->json([
-                'leaderboard' => $leaderboard,
-                'myPosition' => $myPosition
-            ], 200);
+                        $position++;
+                    }
+
+                    return $this->json([
+                        'leaderboard' => $leaderboard,
+                        'myPosition' => $myPosition
+                    ], 200);
         }
 }
 
