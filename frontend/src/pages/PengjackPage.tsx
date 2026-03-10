@@ -14,6 +14,9 @@ type GameState = {
   dealerCards: (number | string)[];
 };
 
+const sleep = (ms: number) => new Promise(resolve => setTimeout(resolve, ms));
+const BUTTON_DELAY = 1000 //ms
+
 export function PengjackPage() {
   const { updateBalance } = useAuth();
 
@@ -73,6 +76,7 @@ export function PengjackPage() {
       const errorMessage = error.response?.data?.error || "Failed to start the game.";
       setNotification({ text: errorMessage, type: "lose" });
     } finally {
+      await sleep(BUTTON_DELAY)
       setIsLoading(false);
     }
   };
@@ -92,6 +96,7 @@ export function PengjackPage() {
       const errorMessage = error.response?.data?.error || "Failed to hit.";
       setNotification({ text: errorMessage, type: "lose" });
     } finally {
+      await sleep(BUTTON_DELAY)
       setIsLoading(false);
     }
   };
@@ -111,6 +116,7 @@ export function PengjackPage() {
       const errorMessage = error.response?.data?.error || "Failed to stand.";
       setNotification({ text: errorMessage, type: "lose" });
     } finally {
+      await sleep(BUTTON_DELAY)
       setIsLoading(false);
     }
   };
