@@ -21,6 +21,11 @@ export function RegisterPage() {
     e.preventDefault();
     setError("");
 
+    if (username.length < 3 || username.length > 30) {
+        setError("Username must be between 3 and 30 characters.");
+        return;
+    }
+
     if (password !== confirmPassword) {
         setError("Passwords do not match!");
         return;
