@@ -1,4 +1,4 @@
-import React from "react";
+import React, {useEffect} from "react";
 
 type GameButtonProps = {
   children: React.ReactNode;
@@ -8,6 +8,26 @@ type GameButtonProps = {
 };
 
 export function GameButton({ children, onClick, disabled = false, className = "" }: GameButtonProps) {
+
+  useEffect(() => {
+  
+      const handleKeyDown = (event: KeyboardEvent) => {
+        if (event.code === "Space") {
+          event.preventDefault(); 
+  
+          if (!disabled) {
+            onClick();
+          }
+        }
+      };
+  
+      window.addEventListener("keydown", handleKeyDown);
+  
+      return () => {
+        window.removeEventListener("keydown", handleKeyDown);
+      };
+    }, [disabled, onClick]);
+
   return (
     <div className="flex justify-center w-full">
       <button
