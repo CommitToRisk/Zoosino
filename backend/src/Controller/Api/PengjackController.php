@@ -45,7 +45,7 @@ class PengjackController extends AbstractController
     }
 
     #[Route('/start', name: 'start', methods: ['POST'])]
-    public function start(RequestStack $requestStack): JsonResponse
+    public function start(RequestStack $requestStack, CacheItemPoolInterface $cache): JsonResponse
     {
         $user = $this->security->getUser();
 
@@ -107,7 +107,7 @@ class PengjackController extends AbstractController
     }
 
     #[Route('/hit', name: 'hit', methods: ['POST'])]
-    public function hit(RequestStack $requestStack): JsonResponse
+    public function hit(RequestStack $requestStack, CacheItemPoolInterface $cache): JsonResponse
     {
         $user = $this->security->getUser();
         if (!$user instanceof User) {
@@ -164,7 +164,7 @@ class PengjackController extends AbstractController
     }
 
     #[Route('/stand', name: 'stand', methods: ['POST'])]
-    public function stand(RequestStack $requestStack): JsonResponse
+    public function stand(RequestStack $requestStack, CacheItemPoolInterface $cache): JsonResponse
     {
         $user = $this->security->getUser();
         if (!$user instanceof User) {

@@ -67,9 +67,6 @@ class RouletteController extends AbstractController
         ]);
     }
 
-    /**
-     * Checks if the input data is present and the user can afford the bet.
-     */
     private function isValidRequest(?array $data, User $user): bool
     {
         $hasRequiredFields = isset($data['betNumber']);
@@ -81,10 +78,6 @@ class RouletteController extends AbstractController
         return true;
     }
 
-
-    /**
-     * Adjusts the User entity score and flushes changes to the database.
-     */
     private function updateUserScore(User $user, int $winAmount): void
     {
         $newScore = $user->getScore() + $winAmount;
