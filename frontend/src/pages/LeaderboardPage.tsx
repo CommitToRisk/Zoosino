@@ -54,15 +54,11 @@ export function LeaderboardPage() {
               My Position
             </span>
             <div className="text-xl sm:text-2xl font-black text-text-main">
-              {user?.isGuest ? (
-                <span className="text-warning">Unranked</span>
-              ) : (
-                data?.myPosition ? `#${data.myPosition}` : "Unranked"
-              )}
+              {data?.myPosition ? "#"+data.myPosition : "Unranked"}
             </div>
             {user?.isGuest && (
               <span className="text-xs text-warning/80 mt-1 max-w-50 leading-tight">
-                Guests are not ranked. Register to join the leaderboard!
+                You are a guest, register to stay in the leaderboard!
               </span>
             )}
           </div>
