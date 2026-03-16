@@ -8,6 +8,7 @@ import { GameNotification } from "@/components/games/GameNotification";
 import { ROULETTE_ORDER } from "@/components/games/turtlette/TurtletteWheel";
 import { GameButton } from "@/components/games/GameButton";
 import { GameHeader } from "@/components/games/GameHeader";
+import type { BetType } from "@/types";
 
 
 export function TurtlettePage() {
@@ -15,7 +16,7 @@ export function TurtlettePage() {
 
   const { updateBalance } = useAuth();
 
-  const [selectedNumber, setSelectedNumber] = useState<number | null>(null);
+  const [selectedBet, setSelectedBet] = useState<BetType | null>(null);
   const [winningNumber, setWinningNumber] = useState<number | null>(null);
   const [isSpinning, setIsSpinning] = useState(false);
   const [isZoomed, setIsZoomed] = useState(false);
@@ -27,7 +28,7 @@ export function TurtlettePage() {
   } | null>(null);
 
   const handleSpin = async () => {
-    if (selectedNumber === null) return;
+    if (selectedBet === null) return;
 
     setNotification(null);
     setIsSpinning(true);
@@ -35,7 +36,7 @@ export function TurtlettePage() {
 
     try {
       const response = await api.post("/api/turtlette/spin", {
-        betNumber: selectedNumber,
+        bet: selectedBet,
       });
       const data = response.data;
 
@@ -109,8 +110,8 @@ export function TurtlettePage() {
 
           <div className="flex flex-col items-center justify-center flex-1 shrink-0 w-full lg:w-1/2 z-10">
             <TurtletteBoard
-              selectedNumber={selectedNumber}
-              onSelect={setSelectedNumber}
+              selectedNumber={selectedBet}
+              onSelect={setSelectedBet}
               disabled={isSpinning || isZoomed}
             />
           </div>
@@ -119,7 +120,7 @@ export function TurtlettePage() {
 
         <GameButton
           onClick={handleSpin}
-          disabled={isSpinning || selectedNumber === null || isZoomed}
+          disabled={isSpinning || selectedBet === null || isZoomed}
         >
           {isSpinning ? "Running..." : "SPIN NOW"}
         </GameButton>
