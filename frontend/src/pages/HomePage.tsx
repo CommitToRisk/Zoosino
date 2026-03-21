@@ -4,9 +4,9 @@ import { useAuth } from "@/lib/auth";
 import { usePageTitle } from "@/hooks/usePageTitle";
 import { GameCard } from "@/components/GameCard";
 
-import slotGame from "@/assets/sloth_game.png";
-import turtletteGame from "@/assets/turtlette_game.png";
-import pengjackGame from "@/assets/pengjack_game.png";
+import slotGame from "/sloth_game.webp";
+import turtletteGame from "/turtlette_game.webp";
+import pengjackGame from "/pengjack_game.webp";
 
 export function HomePage() {
   const { user, isLoading, loginGuest } = useAuth();
@@ -27,8 +27,19 @@ export function HomePage() {
 
   if (isLoading) {
     return (
-      <div className="min-h-screen flex items-center justify-center">
-        <div className="text-xl text-primary animate-pulse">Loading Casino...</div>
+      <div className="p-4 sm:p-10 w-full max-w-6xl mx-auto animate-pulse">
+        <div className="mb-16 flex flex-col items-center">
+          <div className="h-12 w-64 bg-secondary rounded-lg mb-4"></div>
+          <div className="h-6 w-48 bg-secondary rounded-lg mb-8"></div>
+        </div>
+
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 sm:gap-8 mb-16">
+          {[1, 2, 3].map((i) => (
+            <div key={i} className="w-full h-80 bg-secondary rounded-xl border border-border/50"></div>
+          ))}
+        </div>
+
+        <div className="bg-secondary/20 border-2 border-border/20 rounded-2xl h-30 max-w-4xl mx-auto"></div>
       </div>
     );
   }
