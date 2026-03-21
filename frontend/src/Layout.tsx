@@ -11,7 +11,7 @@ export function Layout() {
       
       {user && <Navigation />}
 
-      <main className="grow container mx-auto p-4">
+      <main className="grow container mx-auto px-4 sm:px-6 lg:px-8 py-8">
         <Outlet />
       </main>
 
