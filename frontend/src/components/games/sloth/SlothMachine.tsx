@@ -1,6 +1,6 @@
 import treeUpperImg from "@/assets/sloth/tree_upper.svg";
 import treeBottomImg from "@/assets/sloth/tree_bottom.svg";
-import slothImg from "@/assets/sloth/sloth.png"; 
+import slothImg from "@/assets/sloth/sloth.webp"; 
 import cherryImg from "@/assets/sloth/fruits/cherry.svg";
 import appleImge from "@/assets/sloth/fruits/apple.svg";
 import orangeImg from "@/assets/sloth/fruits/orange.svg";
