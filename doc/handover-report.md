@@ -23,6 +23,12 @@ The program is for students, teachers and other workers of SPŠE Ječná. It is 
     - Documentation
 - Zhao Xiang Yang
     - Scrum master
+#### Contacts
+- relich@spsejecna.cz
+- heger@spsejecna.cz
+- pop@spsejecna.cz
+- cihar@spsejecna.cz
+- yang@spsejecna.cz
 ### Goals
 The goal of this project is the entertainment of its users.
 ### Stakeholders
@@ -31,3 +37,19 @@ The goal of this project is the entertainment of its users.
 | Player                | External | Low       | High     |
 | School administration | External | Medium    | High     |
 | Development team      | Internal | High      | Medium   |
+### Use cases
+| Name              | Description                           | Actor                    |
+|:------------------|:--------------------------------------|:-------------------------|
+| Start game        | The player starts a new game.         | Player                   |
+| Submit score      | The player sends games score.         | Player                   |
+| View leaderboard  | The user views the leaderboard        | Player, Development team |
+| Reset leaderboard | The dev team deletes the leaderboard. | Development team         |
+| ZOO theme         | The frontend uses a ZOO theme.        | Player                   |
+### Requirements
+| ID          | Name                     | Description                                                     | Type        | Source                      | Verification                  |
+|:------------|:-------------------------|:----------------------------------------------------------------|:------------|:----------------------------|:------------------------------|
+| REQ-FUNC-01 | Starting a game          | The system must let the player start a game.                    | Functional  | Use Case: Start game        | Passed game start test        |
+| REQ-FUNC-02 | Saving a score           | The system must let the player save a score into a database.    | Functional  | Use Case: Submit score      | Passed score submit test      |
+| REQ-FUNC-03 | Viewing the leaderboard  | The system must let the user view the current leaderboard.      | Functional  | Use Case: View leaderboard  | Passed leaderboard view test  |
+| REQ-FUNC-04 | Reseting the leaderboard | The system must let the dev team empty the current leaderboard. | Functional  | Use Case: Reset leaderboard | Passed leaderboard reset test |
+| REQ-QUAL-01 | ZOO theme                | The visual must use a ZOO theme.                                | Qualitative | Use Case: Reset leaderboard | Visual test                   |
