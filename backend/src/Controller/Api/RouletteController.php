@@ -24,29 +24,79 @@ class RouletteController extends AbstractController
 
 
     #[Route('/spin', name: 'spin', methods: ['POST'])]
-    public function spin(Request $request,CacheItemPoolInterface $cache): JsonResponse
-    {
-        $user = $this->security->getUser();
-        $data = json_decode($request->getContent(), true);
+        public function spin(
+            Request $request,
+            EntityManagerInterface $entityManager,
+            CacheItemPoolInterface $cache
+        ): JsonResponse
+        {
+            $user = $this->security->getUser();
+            if (!$user instanceof User) {
+                return $this->json(['error' => 'Unauthorized'], 401);
+            }
 
-        if (!$user instanceof User || !$this->isValidRequest($data, $user)) {
-            return $this->json(['error' => 'Invalid request or insufficient funds'], 400);
-        }
-
-            $cacheKey = 'spin_cooldown_' . md5($user->getUserIdentifier());
+            $cacheKey = 'turtlette_cooldown_' . md5($user->getUserIdentifier());
             $cacheItem = $cache->getItem($cacheKey);
 
             if ($cacheItem->isHit()) {
-                return $this->json(['error' => 'Please wait 3 seconds before spinning again.'], 429);
+                return $this->json(['error' => 'Please wait 3.5s before spinning again.'], 429);
             }
 
             $cacheItem->set(true);
-            $cacheItem->expiresAfter(3);
+            $cacheItem->expiresAt(new \DateTimeImmutable('+3500 milliseconds'));
             $cache->save($cacheItem);
 
+            $data = json_decode($request->getContent(), true);
 
-        return $this->processSpin($user, (int)$data['betNumber']);
-    }
+            $bet = $data['bet'] ?? null;
+
+            if ($bet === null) {
+                return $this->json(['error' => 'Neplatná sázka'], 400);
+            }
+
+            $winningNumber = random_int(0, 36);
+
+            $redNumbers = [1, 3, 5, 7, 9, 12, 14, 16, 18, 19, 21, 23, 25, 27, 30, 32, 34, 36];
+
+            $isWin = false;
+            $winAmount = 1;
+
+            if (is_numeric($bet)) {
+                if ((int)$bet === $winningNumber) {
+                    $isWin = true;
+                    $winAmount = 100000;
+                }
+            }
+            elseif ($bet === 'red' && in_array($winningNumber, $redNumbers)) {
+                $isWin = true;
+                $winAmount = 5000;
+            }
+            elseif ($bet === 'black' && $winningNumber !== 0 && !in_array($winningNumber, $redNumbers)) {
+                $isWin = true;
+                $winAmount = 5000;
+            }
+            elseif ($bet === 'even' && $winningNumber !== 0 && $winningNumber % 2 === 0) {
+                $isWin = true;
+                $winAmount = 5000;
+            }
+            elseif ($bet === 'odd' && $winningNumber % 2 !== 0) {
+                $isWin = true;
+                $winAmount = 5000;
+            }
+
+            if ($isWin) {
+                $user->setScore($user->getScore() + $winAmount);
+                $entityManager->persist($user);
+                $entityManager->flush();
+            }
+
+            return $this->json([
+                'winningNumber' => $winningNumber,
+                'isWin' => $isWin,
+                'winAmount' => $winAmount,
+                'newBalance' => $user->getScore()
+            ]);
+        }
 
 
     private function processSpin(User $user, int $betNumber): JsonResponse
@@ -55,7 +105,7 @@ class RouletteController extends AbstractController
         $winAmount = 1;
 
         if($betNumber == $winningNumber){
-            $winAmount = 10000;
+            $winAmount = 100000;
         }
         $this->updateUserScore($user, $winAmount);
 
@@ -67,9 +117,6 @@ class RouletteController extends AbstractController
         ]);
     }
 
-    /**
-     * Checks if the input data is present and the user can afford the bet.
-     */
     private function isValidRequest(?array $data, User $user): bool
     {
         $hasRequiredFields = isset($data['betNumber']);
@@ -82,9 +129,6 @@ class RouletteController extends AbstractController
     }
 
 
-    /**
-     * Adjusts the User entity score and flushes changes to the database.
-     */
     private function updateUserScore(User $user, int $winAmount): void
     {
         $newScore = $user->getScore() + $winAmount;
