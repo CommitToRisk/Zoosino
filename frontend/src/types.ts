@@ -1,6 +1,7 @@
 export type User = {
     username: string;
-    // phrase: string;
     balance: number;
     isGuest: boolean;
 };
+
+export type BetType = "red" | "black" | "even" | "odd" | number;
