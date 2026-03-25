@@ -55,12 +55,12 @@ export function TurtlettePage() {
 
         if (data.winAmount > 1) {
           setNotification({
-            text: `🎉 WINNER! Turtle picked ${data.winningNumber}. You won 10,000 Points!`,
+            text: `🎉 WINNER! Turtle picked ${data.winningNumber}. You won ${data.winAmount} Points!`,
             type: "win",
           });
         } else {
           setNotification({
-            text: `Turtle picked ${data.winningNumber}. You got 1 consolation point.`,
+            text: `Turtle picked ${data.winningNumber}. You got ${data.winAmount} as a consolation.`,
             type: "info",
           });
         }
