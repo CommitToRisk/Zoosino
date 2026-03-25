@@ -191,8 +191,8 @@ React has better performance, easier learning curve and larger community. Our de
 
 | Role          | Hourly salary (CZK) | Number of hours | Price(CZK) |
 |:--------------|--------------------:|----------------:|-----------:|
-| Sysadmin      |                 250 |              25 |      7 500 |
-| Backend       |                 300 |              14 |      3 500 |
+| Sysadmin      |                 250 |              25 |      3 500 |
+| Backend       |                 300 |              14 |      7 500 |
 | Designer      |                 300 |              46 |     13 800 |
 | Documentarist |                 230 |              19 |      4 370 |
 | SCRUM master  |                 230 |              18 |      4 140 |
