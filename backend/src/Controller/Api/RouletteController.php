@@ -84,11 +84,10 @@ class RouletteController extends AbstractController
                 $winAmount = 5000;
             }
 
-            if ($isWin) {
-                $user->setScore($user->getScore() + $winAmount);
-                $entityManager->persist($user);
-                $entityManager->flush();
-            }
+            $user->setScore($user->getScore() + $winAmount);
+            $entityManager->persist($user);
+            $entityManager->flush();
+
 
             return $this->json([
                 'winningNumber' => $winningNumber,
