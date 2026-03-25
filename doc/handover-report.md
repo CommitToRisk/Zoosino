@@ -33,19 +33,18 @@ The program is for students, teachers and other workers of SPŠE Ječná. It is 
 - pop@spsejecna.cz
 - cihar@spsejecna.cz
 - yang@spsejecna.cz
----
+
 
 ### 2. Goals  
 The goal of this project is the entertainment of its users.
 
----
+
 
 ### 3. Stakeholders
 | Role                  | Type     | Inlfuence | Interest |
 |:----------------------|:---------|:----------|:---------|
 | Player                | External | Low       | High     |
 | Development team      | Internal | High      | Medium   |
----
 
 ### 4. Use cases
 | Name                      | Description                                                | Actor                         |
@@ -57,7 +56,6 @@ The goal of this project is the entertainment of its users.
 | Traffic tracking          | The app tracks its traffic.                                | Development team              |
 | Web server usage          | The app must run on a web server.                          | Player, Development team      |
 | ZOO theme                 | The frontend uses a ZOO theme.                             | Player                        |
----
 
 ### 5. Requirements
 | ID          | Name                      | Description                                                  | Type        | Source                              | Verification                   |
@@ -69,7 +67,6 @@ The goal of this project is the entertainment of its users.
 | REQ-FUNC-05 | Web server usage          | The app must run on a web server.                            | Functional  | Use Case: Web server usage          | Passed web server request test |
 | REQ-FUNC-06 | Register / login          | The player can create an acount and log into this account.   | Functional  | Use Case: Register / login          | Passed register / login test   |
 | REQ-QUAL-01 | ZOO theme                 | The visual must use a ZOO theme.                             | Qualitative | Use Case: Reset leaderboard         | Visual test                    |
----
 
 ### 6. Tech stack
 #### 6.1. Server
@@ -91,7 +88,6 @@ The goal of this project is the entertainment of its users.
 |:-----------|:------------|:---------------|:---------|:-------------|:-------|
 | React      | 4 * 4       | 4 * 3          | 5 * 2    | Strict       | **28** |
 | Vue.js     | 3 * 4       | 3 * 3          | 3 * 2    | Mild         | 21     |
----
 ### 8. Requirement traceability
 | Requirement ID | Use Case                | Component                              | Implementation                                                      |
 |:---------------|:------------------------|:---------------------------------------|:--------------------------------------------------------------------|
@@ -103,7 +99,6 @@ The goal of this project is the entertainment of its users.
 | REQ-FUNC-06    | Register / login        | BackendAPI, RegisterPage, LoginPage    | UserController, RegisterPage, LoginPage                             |
 | REQ-QUAL-01    | ZOO theme               | PengjackPage, SlothPage, TurtlettePage | Caddy web server                                                    |
 
----
 ### 9. Implementation
 
 #### 9.1 Frontend
@@ -144,7 +139,6 @@ The goal of this project is the entertainment of its users.
 | `UserRepository.php`     | `src/Repository`     |                                              |
 | `VisitRepository.php`    | `src/Repository`     |                                              |
 | -                        | `config`             | Configuration files for framework behavior.  |
----
 ### 10. Infrastructure and deployment
 #### 10.1. Server and Network Layer
 - Hosting: VPS (Hetzner).
@@ -166,7 +160,6 @@ The goal of this project is the entertainment of its users.
 - Configuration: The environment is set up for production (the .env file has been modified, and it’s connected to the production database).
 - Tip for a classmate: If you’re writing the section on security, don’t forget to mention that thanks to Caddy, we have automatic SSL certificate management, which, combined with the Cloudflare proxy, creates a robust encrypted layer.
 - Would you like me to go into more detail on any specific point (e.g., the Caddy configuration or Docker)?
----
 
 ### 11. Work records
 | Team member | Activity                                          | Requirement | Time (hours) |
@@ -181,7 +174,6 @@ The goal of this project is the entertainment of its users.
 | J. Čihař    | Implementation of traffic tracking                | REQ-FUNC-04 |            1 |
 | F. Heger    | Deploying the web server                          | REQ-FUNC-05 |            2 |
 [more here](https://docs.google.com/spreadsheets/d/1lTG6RwELVSDwi0qenLnRGyiBGwYZqYOdxpJOUNz5UFs/edit?gid=0#gid=0)
----
 
 ### 12. Balance sheet
 | Item   | Price (CZK/month) |
@@ -200,7 +192,6 @@ The goal of this project is the entertainment of its users.
 | Total         |               1 310 |             122 |     33 310 |
 
 - Total price: 33 325,71CZK
----
 
 ### 13. Testing
 #### 13.1. Basic Load Measurement
@@ -292,13 +283,11 @@ The goal of this project is the entertainment of its users.
 **Actionable Steps:**
 - **Implement Core ARIA:** Add `aria-label` to all icon-only buttons or ambiguous links. Ensure complex custom components explicitly state their `role` (e.g., `role="dialog"` or `role="menu"`).
 - **Audit Alt Texts:** Ensure all `<img src="...webp">` tags (especially game covers like `sloth_game.webp`) have descriptive `alt` attributes (e.g., `alt="Play Sloth Casino Game"`), so visually impaired users know what they are interacting with.
----
 
 ### 14. Log data
 - Unique visitors: 234
 - Valid requests: 400 369
 - Failed requests: 1 320
----
 
 ### 15. Evaluation
 Zoosino is a functional prototype of a gaming platform with well-designed user account logic. The project successfully implements core features, including the management of virtual funds and leaderboards. A significant advantage is the barrier-free access system (Guest mode), which facilitates immediate testing of the application. The minimalist interface offers a stable technical foundation and clean code that can be effectively built upon.
@@ -310,7 +299,6 @@ Vulnerability to automation: The application is currently susceptible to the use
 Game content offerings: Add new types of casino games
 Expand gamification: Implement daily rewards, achievements, or more advanced player statistics to increase motivation and retention
 Improve animations: Make games more dynamic and visually appealing for a better user experience
----
 
 ### 16. Attachments
 - [GitHub repository](https://github.com/CommitToRisk/Zoosino)
