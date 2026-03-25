@@ -53,3 +53,26 @@ The goal of this project is the entertainment of its users.
 | REQ-FUNC-03 | Viewing the leaderboard  | The system must let the user view the current leaderboard.      | Functional  | Use Case: View leaderboard  | Passed leaderboard view test  |
 | REQ-FUNC-04 | Reseting the leaderboard | The system must let the dev team empty the current leaderboard. | Functional  | Use Case: Reset leaderboard | Passed leaderboard reset test |
 | REQ-QUAL-01 | ZOO theme                | The visual must use a ZOO theme.                                | Qualitative | Use Case: Reset leaderboard | Visual test                   |
+
+### Tech stack
+#### Server
+| Technology | Performance | Ease of implementation | Feature                            |
+|:-----------|:------------|:-----------------------|:-----------------------------------|
+| Caddy      | 4 * 4       | 5 * 3                  | Automatically handles certificates |
+| Nginx      | 5 * 4       | 4 * 3                  | X                                  |
+| Apache     | 3 * 4       | 3 * 3                  | X                                  |
+
+### Backend
+
+### Frontend
+
+### Evaluation:
+Zoosino is a functional prototype of a gaming platform with well-designed user account logic. The project successfully implements core features, including the management of virtual funds and leaderboards. A significant advantage is the barrier-free access system (Guest mode), which facilitates immediate testing of the application. The minimalist interface offers a stable technical foundation and clean code that can be effectively built upon.
+
+#### Issues:
+Vulnerability to automation: The application is currently susceptible to the use of automated tools and scripts. Since there is no game mechanic that allows points to be lost, a user can increase their balance indefinitely without risk.
+
+#### Opportunities for further development:
+Game content offerings: Add new types of casino games
+Expand gamification: Implement daily rewards, achievements, or more advanced player statistics to increase motivation and retention
+Improve animations: Make games more dynamic and visually appealing for a better user experience
