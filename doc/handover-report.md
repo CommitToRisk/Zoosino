@@ -76,6 +76,8 @@ The goal of this project is the entertainment of its users.
 | Nginx      | 5 * 4       | 3 * 3                  | Manual    | 29     |
 | Apache     | 3 * 4       | 2 * 3                  | Manual    | 18     |
 
+Caddy has high performance, is easy to implement and handles SSL certificates automatically.
+
 #### 6.2. Backend
 | Technology            | Performance | Learning curve | Architecture  | Score  |
 |:----------------------|:------------|:---------------|:--------------|:-------|
@@ -83,11 +85,16 @@ The goal of this project is the entertainment of its users.
 | Python (Flask)        | 4 * 4       | 4 * 3          | Mild          | 28     |
 | JavaScript (Express)  | 2 * 4       | 3 * 3          | Mild - Medium | 17     |
 
+Symfony has high performance and easy learning curve. Our backend developer can also already use it.
+
 #### 6.3. Frontend
-| Technology | Performance | Learning curve | Comunity | Architecture | Score  |
-|:-----------|:------------|:---------------|:---------|:-------------|:-------|
-| React      | 4 * 4       | 4 * 3          | 5 * 2    | Strict       | **28** |
-| Vue.js     | 3 * 4       | 3 * 3          | 3 * 2    | Mild         | 21     |
+| Technology | Performance | Learning curve | Community | Architecture | Score  |
+|:-----------|:------------|:---------------|:----------|:-------------|:-------|
+| React      | 4 * 4       | 4 * 3          | 5 * 2     | Strict       | **28** |
+| Vue.js     | 3 * 4       | 3 * 3          | 3 * 2     | Mild         | 21     |
+
+React has better performance, easier learning curve and larger community. Our designer can also already use it.
+
 ### 8. Requirement traceability
 | Requirement ID | Use Case                | Component                              | Implementation                                                      |
 |:---------------|:------------------------|:---------------------------------------|:--------------------------------------------------------------------|
