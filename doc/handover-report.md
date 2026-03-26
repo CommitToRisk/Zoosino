@@ -143,8 +143,8 @@ React has better performance, easier learning curve and larger community. Our de
 | `UserController.php`     | `src/Controller/Api` | Serves endpoints for the users actions.      |
 | `User.php`               | `src/Entity`         | Database user entity mapped with Doctrine.   |
 | `Visit.php`              | `src/Entity`         | Database visit entity mapped with Doctrine.  |
-| `UserRepository.php`     | `src/Repository`     |                                              |
-| `VisitRepository.php`    | `src/Repository`     |                                              |
+| `UserRepository.php`     | `src/Repository`     | Implementation of repository design pattern. |
+| `VisitRepository.php`    | `src/Repository`     | Implementation of repository design pattern. |
 | -                        | `config`             | Configuration files for framework behavior.  |
 ### 10. Infrastructure and deployment
 #### 10.1. Server and Network Layer
